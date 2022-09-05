@@ -1,6 +1,7 @@
 const app = require("../app");
 const request = require("supertest");
 const { Endpoints } = require("../../shared/endpoints");
+const { HttpErrors } = require("../../shared/http-errors");
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
@@ -14,7 +15,7 @@ describe("log in and user authentication", () => {
       .send(userLogin)
       .expect(401)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid login credentials");
+        expect(body.msg).toBe(HttpErrors.invalidLogin.msg);
       });
   });
 
@@ -29,7 +30,7 @@ describe("log in and user authentication", () => {
       .send(userLogin)
       .expect(401)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid login credentials");
+        expect(body.msg).toBe(HttpErrors.invalidLogin.msg);
       });
   });
 

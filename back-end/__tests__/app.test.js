@@ -32,4 +32,25 @@ describe("log in and user authentication", () => {
         expect(body.msg).toBe("Invalid login credentials");
       });
   });
+
+  test("returns 200 with user if username and password are valid.", () => {
+    const userLogin = {
+      username: "user1@email.com",
+      password: "password",
+    };
+
+    return request(app)
+      .post(Endpoints.loginEnd)
+      .send(userLogin)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toEqual({
+          user_id: 1,
+          screen_name: "",
+          bio: "",
+          img_url: "",
+          topics: [],
+        });
+      });
+  });
 });

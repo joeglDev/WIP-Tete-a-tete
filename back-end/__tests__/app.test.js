@@ -17,4 +17,19 @@ describe("log in and user authentication", () => {
         expect(body.msg).toBe("Invalid login credentials");
       });
   });
+
+  test("returns 401 with error message if password isn't found", () => {
+    const userLogin = {
+      username: "user1@email.com",
+      password: "not_a_password",
+    };
+
+    return request(app)
+      .post(Endpoints.loginEnd)
+      .send(userLogin)
+      .expect(401)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid login credentials");
+      });
+  });
 });

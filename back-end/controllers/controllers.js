@@ -1,7 +1,5 @@
-const { HttpErrors } = require("../../shared/http-errors")
+const { HttpErrors } = require("../../shared/http-errors");
 
 exports.authenticateUser = (req, res) => {
-    res.sendStatus(HttpErrors.invalidLogin.status);
-}
-
-
+  res.status(HttpErrors.invalidLogin.status).send(HttpErrors.invalidLogin);
+};

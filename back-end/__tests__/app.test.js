@@ -1,7 +1,7 @@
 const app = require("../app");
 const request = require("supertest");
-const { Endpoints } = require("../../shared/endpoints");
-const { HttpErrors } = require("../../shared/http-errors");
+const { Endpoints } = require("../../shared/Endpoints");
+const { HttpErrors } = require("../../shared/HttpErrors");
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {

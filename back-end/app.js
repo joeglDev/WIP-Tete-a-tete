@@ -1,5 +1,5 @@
 const express = require("express");
-const { Endpoints } = require("../shared/endpoints");
+const { Endpoints } = require("../shared/Endpoints");
 const { authenticateUser } = require("./controllers/login.controller");
 const app = express();
 

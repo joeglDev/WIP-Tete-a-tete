@@ -1,4 +1,4 @@
-const { HttpErrors } = require("../../shared/http-errors");
+const { HttpErrors } = require("../../shared/HttpErrors");
 const { use } = require("../app");
 const { AuthenticatorMock } = require("../mocks/AuthenticatorMock");
 

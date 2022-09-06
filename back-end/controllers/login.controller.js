@@ -3,11 +3,16 @@ const { use } = require("../app");
 const { AuthenticatorMock } = require("../mocks/AuthenticatorMock");
 const { selectUserByUsername } = require("../models/users.model");
 
-exports.authenticateUser = (req, res) => {
+exports.authenticateUser = async (req, res) => {
   const { username, password } = req.body;
   const authenticator = new AuthenticatorMock();
-  if (authenticator.authenticateUser(username, password)) {
-    const user = selectUserByUsername(username);
-    res.send(user);
-  } else res.status(401).send(HttpErrors.invalidLogin);
+  try {
+    if (authenticator.authenticateUser(username, password)) {
+      const user = await selectUserByUsername(username);
+      res.send({ user });
+    } else res.status(401).send(HttpErrors.invalidLogin);
+  } catch (err) {
+    console.log(err);  
+    // add next functionality to handle error
+  }
 };

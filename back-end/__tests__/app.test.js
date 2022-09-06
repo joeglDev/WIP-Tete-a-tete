@@ -2,6 +2,7 @@ const app = require("../app");
 const request = require("supertest");
 const { Endpoints } = require("../../shared/Endpoints");
 const { HttpErrors } = require("../../shared/HttpErrors");
+const userData = require("../db/data/test-data/users")
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
@@ -47,10 +48,10 @@ describe("log in and user authentication", () => {
       .then(({ body }) => {
         expect(body.user).toEqual({
           user_id: 1,
-          screen_name: "",
-          bio: "",
-          img_url: "",
-          topics: [],
+          screen_name: userData[0].screen_name,
+          bio: userData[0].bio,
+          img_url: userData[0].img_url,
+          topics: []
         });
       });
   });

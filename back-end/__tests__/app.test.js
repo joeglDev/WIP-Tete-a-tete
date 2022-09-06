@@ -55,4 +55,19 @@ describe("log in and user authentication", () => {
         });
       });
   });
+
+  test("returns status 401 and error message for a missing request key.", () => {
+    const userLogin = {
+      username: "user1@email.com",
+   
+    };
+
+    return request(app)
+      .post(Endpoints.loginEnd)
+      .send(userLogin)
+      .expect(401)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid login credentials");
+      });
+  });
 });

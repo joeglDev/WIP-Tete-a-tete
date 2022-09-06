@@ -3,9 +3,14 @@ const db = require("../connection.js");
 
 const ENV = process.env.NODE_ENV || "development";
 const devData = require(`../data/${ENV}-data/index.js`);
+console.log(devData)
 
 const runSeed = () => {
   return seed(devData).then(() => db.end());
 };
 
 runSeed();
+
+
+
+

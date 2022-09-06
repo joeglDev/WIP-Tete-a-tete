@@ -10,10 +10,7 @@ exports.authenticateUser = async (req, res, next) => {
       const user = await selectUserByUsername(username);
       res.send({ user });
     } else res.status(401).send(HttpErrors.invalidLogin);
-  } catch (err) {
-    console.log("IN CONTROLLER ERRORS")
-    console.log(err);  
-    next(err)
-    // add next functionality to handle error
+  } catch (err) {  
+    console.log(err)
   }
 };

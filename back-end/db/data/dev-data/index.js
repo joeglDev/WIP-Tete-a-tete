@@ -1,0 +1,1 @@
+exports.usersData = require(`${__dirname}/users.js`);

@@ -1,6 +1,6 @@
 class Endpoints {
   static loginEnd = "/login";
-  static updateUserProfileEnd = "/users";
+  static usersEnd = "/users";
 }
 
 module.exports.Endpoints = Endpoints;

@@ -5,8 +5,8 @@ const { patchUserProfile } = require("./controllers/users.controller");
 const app = express();
 
 //middleware
-//const cors = require('cors');
-//app.use(cors());
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 
 //endpoints

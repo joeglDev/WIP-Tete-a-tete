@@ -10,7 +10,7 @@
     
 </template>
 
-<script>
+<!-- <script>
  import axios from 'axios'
 
      export default {
@@ -37,4 +37,42 @@
         }
     }
 
-</script>
+    
+
+    
+
+</script> -->
+
+<script>
+    import axios from 'axios'
+   
+        export default {
+           username: "",
+           password: "",
+           setup() {
+               const username = ref('');
+               const password = ref('');}
+           
+                   
+               
+           , methods: {
+               loginSubmit(event) {
+                   event.preventDefault()
+                   axios.post(
+                   `http://localhost:9090/login`, 
+                   {username: this.username, password: this.password},
+                   this.username = '',
+                   this.password = '',
+                   ).then((response) => {
+                       console.log(response);
+                   }).catch((error)=>{console.log(error)})
+               }, 
+            
+           }
+       }
+   
+       
+   
+       
+   
+   </script>

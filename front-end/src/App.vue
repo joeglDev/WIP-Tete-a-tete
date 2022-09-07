@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 import Bio from "./components/Bio.vue"
 import Signup from "./components/Signup.vue";
 import Interests from "./components/Interests.vue";

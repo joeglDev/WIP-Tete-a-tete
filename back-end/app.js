@@ -6,6 +6,7 @@ const app = express();
 
 //middleware
 const cors = require('cors');
+const { HttpErrors } = require("../shared/HttpErrors");
 app.use(cors());
 app.use(express.json());
 
@@ -14,6 +15,9 @@ app.post(Endpoints.loginEnd, authenticateUser);
 app.patch(`${Endpoints.usersEnd}/:user_id`, patchUserProfile);
 
 //errors
-//app.use()
+app.use((error, req, res, next) => {
+    console.log(error, "In app")
+    res.status(error.status).send({msg: error.msg});
+}) 
 
 module.exports = app;

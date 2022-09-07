@@ -95,7 +95,7 @@ describe("create user profile", () => {
       .send(updateUserObj)
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("");
+        expect(body.msg).toBe(HttpErrors.itemNotFound.msg);
       });
   });
 });

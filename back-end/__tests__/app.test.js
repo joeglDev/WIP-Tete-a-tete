@@ -2,7 +2,7 @@ const app = require("../app");
 const request = require("supertest");
 const { Endpoints } = require("../../shared/Endpoints");
 const { HttpErrors } = require("../../shared/HttpErrors");
-const userData = require("../db/data/test-data/users")
+const userData = require("../db/data/test-data/users");
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
@@ -51,7 +51,7 @@ describe("log in and user authentication", () => {
           screen_name: userData[0].screen_name,
           bio: userData[0].bio,
           img_url: userData[0].img_url,
-          topics: []
+          topics: [],
         });
       });
   });
@@ -59,7 +59,6 @@ describe("log in and user authentication", () => {
   test("returns status 401 and error message for a missing request key.", () => {
     const userLogin = {
       username: "user1@email.com",
-   
     };
 
     return request(app)
@@ -70,4 +69,8 @@ describe("log in and user authentication", () => {
         expect(body.msg).toBe("Invalid login credentials");
       });
   });
+});
+
+describe("create user profile", () => {
+  test("send valid profile data returns 200 status and stores item.", () => {});
 });

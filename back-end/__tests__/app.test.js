@@ -88,4 +88,14 @@ describe("create user profile", () => {
         });
       });
   });
+  test("Returns 404 for valid but non existent user id", () => {
+    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    return request(app)
+      .patch(`${Endpoints.usersEnd}/999`)
+      .send(updateUserObj)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("");
+      });
+  });
 });

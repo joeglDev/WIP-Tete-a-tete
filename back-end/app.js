@@ -16,8 +16,11 @@ app.patch(`${Endpoints.usersEnd}/:user_id`, patchUserProfile);
 
 //errors
 app.use((error, req, res, next) => {
-    console.log(error, "In app")
+    if (error.code === "22P02") {
+    res.status(HttpErrors.invalidRequest.status).send({msg: HttpErrors.invalidRequest.msg});
+    } else {
     res.status(error.status).send({msg: error.msg});
+    }
 }) 
 
 module.exports = app;

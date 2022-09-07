@@ -98,4 +98,14 @@ describe("create user profile", () => {
         expect(body.msg).toBe(HttpErrors.itemNotFound.msg);
       });
   });
+  test("Returns 400 for invalid user id data type", () => {
+    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    return request(app)
+      .patch(`${Endpoints.usersEnd}/notvalidid`)
+      .send(updateUserObj)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(HttpErrors.invalidRequest.msg);
+      });
+  });
 });

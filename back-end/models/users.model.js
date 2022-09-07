@@ -12,6 +12,13 @@ exports.selectUserByUsername = async (username) => {
   return user;
 };
 
-exports.updateUserProfile = async (username) => {
-  console.log("update profile model");
+exports.updateUserProfile = async (user_id, userProfile) => {
+  const { screen_name, bio, img_url } = userProfile;
+  const {
+    rows: [user],
+  } = await db.query(
+    "UPDATE users SET screen_name = $1, bio = $2, img_url = $3 WHERE user_id = $4 RETURNING *;",
+    [screen_name, bio, img_url, user_id]
+  );
+  return user;
 };

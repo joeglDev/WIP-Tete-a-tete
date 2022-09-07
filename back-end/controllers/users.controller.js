@@ -1,10 +1,14 @@
 const { updateUserProfile } = require("../models/users.model");
 
-exports.createUserProfile = async (req, res, next) => {
-  console.log("create profile controller");
+exports.patchUserProfile = async (req, res, next) => {
   try {
-    updateUserProfile();
+    const {user_id} = req.params;
+    const updatedUser = await updateUserProfile(user_id, req.body);
+    console.log(updatedUser)
+    res.status(200).send({user: updatedUser});
   } catch (error) {
     console.log(error);
   }
 };
+
+

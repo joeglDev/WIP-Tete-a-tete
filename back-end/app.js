@@ -1,18 +1,17 @@
 const express = require("express");
 const { Endpoints } = require("../shared/Endpoints");
 const { authenticateUser } = require("./controllers/login.controller");
-const { updateUserProfile } = require("./models/users.model");
+const { patchUserProfile } = require("./controllers/users.controller");
 const app = express();
 
 //middleware
 //const cors = require('cors');
 //app.use(cors());
-
 app.use(express.json());
 
 //endpoints
 app.post(Endpoints.loginEnd, authenticateUser);
-app.post(`${Endpoints.updateUserProfile}/:user_id`, updateUserProfile);
+app.patch(`${Endpoints.usersEnd}/:user_id`, patchUserProfile);
 
 //errors
 //app.use()

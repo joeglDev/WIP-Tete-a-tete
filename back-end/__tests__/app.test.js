@@ -72,5 +72,20 @@ describe("log in and user authentication", () => {
 });
 
 describe("create user profile", () => {
-  test("send valid profile data returns 200 status and stores item.", () => {});
+  test("send valid profile data returns 200 status and stores item.", () => {
+    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    return request(app)
+      .patch(`${Endpoints.usersEnd}/1`)
+      .send(updateUserObj)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toEqual({
+          user_id: 1,
+          username: "user1@email.com",
+          screen_name: "user_1",
+          bio: "Updated bio test",
+          img_url: "",
+        });
+      });
+  });
 });

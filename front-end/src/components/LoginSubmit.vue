@@ -11,7 +11,9 @@
 </template>
 
 <script>
-    export default {
+ import axios from 'axios'
+
+     export default {
         username: "",
         password: "",
         data() {
@@ -20,19 +22,19 @@
                 password: '',
             }
         }, methods: {
-            loginSubmit(event){
+            loginSubmit(event) {
                 event.preventDefault()
-                    const NewUsername= {
-                    username : this.username,
-                    password : this.password
-            }
-            this.$emit('user-information', NewUsername)
-            console.log(NewUsername)
+                axios.post(
+                `http://localhost:9090/login`, 
+                {username: this.username, password: this.password},
+                this.username = '',
+                this.password = '',
+                ).then((response) => {
+                    console.log(response);
+                }).catch((error)=>{console.log(error)})
+            }, 
+         
         }
     }
-}
-
 
 </script>
-
-

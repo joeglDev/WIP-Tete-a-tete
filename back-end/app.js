@@ -12,7 +12,7 @@ app.use(express.json());
 
 //endpoints
 app.post(Endpoints.loginEnd, authenticateUser);
-app.put(`${Endpoints.updateUserProfile}/:user_id`, updateUserProfile);
+app.post(`${Endpoints.updateUserProfile}/:user_id`, updateUserProfile);
 
 //errors
 //app.use()

@@ -157,4 +157,13 @@ describe("get user topics", () => {
         expect(body.msg).toBe(HttpErrors.itemNotFound.msg);
       });
   });
+
+  test("returns status code 400 and an error message for invalid user_id", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd("invalid")}`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(HttpErrors.invalidRequest.msg);
+      });
+  });
 });

@@ -64,10 +64,6 @@ const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
   );
 
   await db.query(insertUsers_Topics_JoinQueryStr).then((result) => result.rows);
-  // await Promise.all([usersPromise, topicsPromise])
-  //     .then(() => {
-  //       return users_Topics_JoinPromise;
-  //     }).then()
-  // await users_Topics_JoinPromise;
+
 };
 module.exports = seed;

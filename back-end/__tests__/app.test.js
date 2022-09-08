@@ -73,7 +73,11 @@ describe("log in and user authentication", () => {
 
 describe("create user profile", () => {
   test("send valid profile data returns 200 status and stores item.", () => {
-    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    const updateUserObj = {
+      bio: "Updated bio test",
+      screen_name: userData[0].screen_name,
+      img_url: userData[0].img_url,
+    };
     return request(app)
       .patch(`${Endpoints.usersEnd}/1`)
       .send(updateUserObj)
@@ -89,7 +93,11 @@ describe("create user profile", () => {
       });
   });
   test("Returns 404 for valid but non existent user id", () => {
-    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    const updateUserObj = {
+      bio: "Updated bio test",
+      screen_name: userData[0].screen_name,
+      img_url: userData[0].img_url,
+    };
     return request(app)
       .patch(`${Endpoints.usersEnd}/999`)
       .send(updateUserObj)
@@ -99,7 +107,11 @@ describe("create user profile", () => {
       });
   });
   test("Returns 400 for invalid user id data type", () => {
-    const updateUserObj = { bio: "Updated bio test", screen_name: userData[0].screen_name, img_url: userData[0].img_url };
+    const updateUserObj = {
+      bio: "Updated bio test",
+      screen_name: userData[0].screen_name,
+      img_url: userData[0].img_url,
+    };
     return request(app)
       .patch(`${Endpoints.usersEnd}/notvalidid`)
       .send(updateUserObj)
@@ -118,3 +130,40 @@ describe("create user profile", () => {
 3) Get all entries from join table where user_id is that of incoming user profile
 4) Update all entries from join table with new incoming topics
 */
+
+describe("get user topics", () => {
+  test("returns status code 200 and a array object of topics for a user with topics", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd(1)}`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user_topics).toEqual(["Topic A", "Topic B", "Topic C"]);
+      });
+  });
+  test("returns status code 200 and a empty array object of topics for a user with no topics", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd(2)}`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user_topics).toEqual([]);
+      });
+  });
+
+  test("returns status code 404 and an error message for user_id not found", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd(999)}`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe(HttpErrors.itemNotFound.msg);
+      });
+  });
+
+  test("returns status code 400 and an error message for invalid user_id", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd("invalid")}`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(HttpErrors.invalidRequest.msg);
+      });
+  });
+});

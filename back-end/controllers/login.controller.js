@@ -11,6 +11,6 @@ exports.authenticateUser = async (req, res, next) => {
       res.status(200).send({ user });
     } else res.status(401).send(HttpErrors.invalidLogin);
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

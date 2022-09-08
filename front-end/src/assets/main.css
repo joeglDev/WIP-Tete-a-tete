@@ -19,10 +19,23 @@ font-size: 40px;
 h2 {
   font-family: "lemurregular";
   font-size: 28px;
-}
-    .container {
+} 
+    .container{
       margin: auto;
-      margin-top: 200px;
+      margin-top: 250px;
+      display: grid;
+      grid-template-areas: "icon-1 logo logo . . ."
+        "tagline tagline tagline tagline tagline tagline"
+        "syno-1 syno-1 icon-2 syno-2 syno-2 icon-3";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(6, 1fr);
+      height: 400px;
+      width: 1030px;
+    }
+
+    .join-us-container{
+      margin: auto;
+      margin-top: 150px;
       display: grid;
       grid-template-areas: "icon-1 logo logo . . ."
         "tagline tagline tagline tagline tagline tagline"
@@ -271,20 +284,56 @@ h2 {
     }
 
     .user-box {
-      border: #231e21 solid 2px;
-      width: 355px;
-      height: 100px;
+      outline: #231e21 solid 2px;
+      width: 150px;
+      height: 200px;
       top: 50px;
-      right: 50px;
+      right: 206px;
       position: absolute;
+      display: grid;
+      text-align: center;
+    }
+
+
+    
+
+    .screen-name-text{
+      grid-row: 1;
+      background-color: #231e21;
+      color: #EAE4D7;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    
+    .user-image{
+      grid-row: 2/4;
+      outline: #231e21 solid 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .user-image img {
+      width: 80px;
 
     }
 
-    .user-img {
-      width: 50px;
-      padding-left: 20px;
+    h4{
+      font-size: 28px;
+      font-family: "lemurregular";
+      line-height: 0em;
     }
 
+    .add-interests-container {
+      margin: auto;
+      margin-top: 150px;
+      display: grid;
+      grid-template-areas: "headline headline headline headline"
+        " tagline-1 tagline-1 tagline-2 tagline-2"
+        "image-1 image-2 image-3 image-4";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(4, 1fr);
+      height: 400px;
+      width: 1030px;
+    }

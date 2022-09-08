@@ -1,23 +1,22 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
 import Bio from "./components/Bio.vue"
 import Signup from "./components/Signup.vue";
 import Interests from "./components/Interests.vue";
 import Login from "./components/Login.vue";
-import Profile from "./components/Profile.vue";
+import UserBox from "./components/UserBox.vue";
+import AddInterests from "./components/AddInterests.vue"
+
+
 </script>
 
 <template>
   <header>
-    <Profile/>
+    <UserBox/>
     <Bio/>
     <Signup/>
-  <Interests/>
-  <Login/>
-    <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-    </nav>
+    <Interests/>
+    <AddInterests/>
+    <Login/>
   </header>
 
   <!-- <RouterView /> -->

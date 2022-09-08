@@ -10,69 +10,41 @@
     
 </template>
 
-<!-- <script>
+<script setup>
  import axios from 'axios'
+ import {ref, reactive, defineProps} from 'vue'
+ import { userStore } from '../stores/user';
+const profile = userStore()
 
-     export default {
-        username: "",
-        password: "",
-        data() {
-            return {
-                username: '',
-                password: '',
-            }
-        }, methods: {
-            loginSubmit(event) {
-                event.preventDefault()
+
+    
+        const user = reactive({username: '', password: ''})
+
+        const props = defineProps({username: String, password: String})
+     
+        const loginSubmit = (event)=>{
+            event.preventDefault()
                 axios.post(
                 `http://localhost:9090/login`, 
-                {username: this.username, password: this.password},
-                this.username = '',
-                this.password = '',
-                ).then((response) => {
-                    console.log(response);
-                }).catch((error)=>{console.log(error)})
-            }, 
-         
-        }
-    }
-
-    
-
-    
-
-</script> -->
-
-<script>
-    import axios from 'axios'
-   
-        export default {
-           username: "",
-           password: "",
-           setup() {
-               const username = ref('');
-               const password = ref('');}
-           
-                   
+                {username: props.username, password: props.password},
+                
                
-           , methods: {
-               loginSubmit(event) {
-                   event.preventDefault()
-                   axios.post(
-                   `http://localhost:9090/login`, 
-                   {username: this.username, password: this.password},
-                   this.username = '',
-                   this.password = '',
-                   ).then((response) => {
-                       console.log(response);
-                   }).catch((error)=>{console.log(error)})
-               }, 
-            
-           }
-       }
-   
+                ).then((response) => {
+                    
+                    if (response.status === 200){
+                    profile.setProfile(response.data.user)
+                    }
+                   
+                    
+                }).catch((error)=>{if (error.response.status === 401) {
+                    alert ("invalid user!")
+                   
+                }})
+        } 
+
+
        
-   
-       
-   
-   </script>
+        
+        </script>
+      
+

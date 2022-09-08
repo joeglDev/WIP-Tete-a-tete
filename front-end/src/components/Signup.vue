@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="join-us-container">
       <div class="item one"><img class="arrow-icon" src="../assets/arrow-icon.svg"></div>
       <div class="item two"><h1 class="join-us-text">Join us today</h1></div>
       <div class="item three"><h1>Create an account, forever free of charge</h1></div>

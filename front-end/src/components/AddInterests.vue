@@ -4,8 +4,9 @@
       <h1>Add your interests here</h1>
     </div>
     <div class="item-interests interest-1">
-      <p>Message is: {{ interestInput1 }}</p>
-      <input v-model="interestInput1" placeholder="insert interest 1" />
+      <p>{{ interestsArray.values[0] }}</p>
+      <p v-if="!interestsArray.values[0]">&nbsp;</p>
+      <input placeholder="insert interest 1" />
       <button v-on:click="interestsSubmit" class="add-button">
         <img
           class="add-interest-button"
@@ -15,8 +16,9 @@
       </button>
     </div>
     <div class="item-interests interest-2">
-      <p>Message is: {{ interestInput2 }}</p>
-      <input v-model="interestInput2" placeholder="insert interest 2" />
+      <p>{{ interestsArray.values[1] }}</p>
+      <p v-if="!interestsArray.values[1]">&nbsp;</p>
+      <input placeholder="insert interest 2" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -26,8 +28,9 @@
       </button>
     </div>
     <div class="item-interests interest-3">
-      <p>Message is: {{ interestInput3 }}</p>
-      <input v-model="interestInput3" placeholder="insert interest 3" />
+      <p>{{ interestsArray.values[2] }}</p>
+      <p v-if="!interestsArray.values[2]">&nbsp;</p>
+      <input placeholder="insert interest 3" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -37,8 +40,9 @@
       </button>
     </div>
     <div class="item-interests interest-4">
-      <p>Message is: {{ interestInput4 }}</p>
-      <input v-model="interestInput4" placeholder="insert interest 4" />
+      <p>{{ interestsArray.values[3] }}</p>
+      <p v-if="!interestsArray.values[3]">&nbsp;</p>
+      <input placeholder="insert interest 4" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -48,8 +52,9 @@
       </button>
     </div>
     <div class="item-interests interest-5">
-      <p>Message is: {{ interestInput5 }}</p>
-      <input v-model="interestInput5" placeholder="insert interest 5" />
+      <p>{{ interestsArray.values[4] }}</p>
+      <p v-if="!interestsArray.values[4]">&nbsp;</p>
+      <input placeholder="insert interest 5" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -59,8 +64,9 @@
       </button>
     </div>
     <div class="item-interests interest-6">
-      <p>Message is: {{ interestInput6 }}</p>
-      <input v-model="interestInput6" placeholder="insert interest 6" />
+      <p>{{ interestsArray.values[5] }}</p>
+      <p v-if="!interestsArray.values[5]">&nbsp;</p>
+      <input placeholder="insert interest 6" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -70,8 +76,9 @@
       </button>
     </div>
     <div class="item-interests interest-7">
-      <p>Message is: {{ interestInput7 }}</p>
-      <input v-model="interestInput7" placeholder="insert interest 7" />
+      <p>{{ interestsArray.values[6] }}</p>
+      <p v-if="!interestsArray.values[6]">&nbsp;</p>
+      <input placeholder="insert interest 7" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -81,8 +88,9 @@
       </button>
     </div>
     <div class="item-interests interest-8">
-      <p>Message is: {{ interestInput8 }}</p>
-      <input v-model="interestInput8" placeholder="insert interest 8" />
+      <p>{{ interestsArray.values[7] }}</p>
+      <p v-if="!interestsArray.values[7]">&nbsp;</p>
+      <input placeholder="insert interest 8" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -92,8 +100,9 @@
       </button>
     </div>
     <div class="item-interests interest-9">
-      <p>Message is: {{ interestInput9 }}</p>
-      <input v-model="interestInput9" placeholder="insert interest 9" />
+      <p>{{ interestsArray.values[8] }}</p>
+      <p v-if="!interestsArray.values[8]">&nbsp;</p>
+      <input placeholder="insert interest 9" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -103,8 +112,9 @@
       </button>
     </div>
     <div class="item-interests interest-10">
-      <p>Message is: {{ interestInput10 }}</p>
-      <input v-model="interestInput10" placeholder="insert interest 10" />
+      <p>{{ interestsArray.values[9] }}</p>
+      <p v-if="!interestsArray.values[9]">&nbsp;</p>
+      <input placeholder="insert interest 10" />
       <button class="add-button">
         <img
           class="add-interest-button"
@@ -119,17 +129,30 @@
 <script setup>
 import { ref, reactive, defineProps } from "vue";
 import { interestsStore } from "../stores/interestsStore";
+import axios from "axios";
+import { userStore } from "../stores/user";
 const interestsArray = interestsStore();
 const props = defineProps([]);
+const profile = userStore();
 
-const interestsSubmit = (event) => {
-  event.preventDefault();
 
-  interestsArray.setInterestsArray({
-    values: [null, null, null, null, null, null, null, null, null, null],
-  });
-  console.log(interestsArray);
-};
+const fetchTopics = (id)=>{
+axios
+    .get(`http://localhost:9090/users/${id}/topics`).then((response)=>interestsOverwriter(response.data.user_topics)).catch((err)=>{console.log(err)})
+
+  const interestsOverwriter = (fetchedTopics) => {
+      for (let i=0; i<fetchedTopics.length; i++){
+          interestsArray.values[i] = fetchedTopics[i]
+         }
+  }}
+
+    const interestsSubmit = (event) => {
+  event.preventDefault(); 
+  console.log("Its just me, interestsSubmit doing my thing...")
+}
 </script>
 
-//
+
+
+
+

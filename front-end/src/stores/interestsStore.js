@@ -9,7 +9,6 @@ export const interestsStore = defineStore("interests", {
   },
   actions: {
     setInterestsArray(userInterests) {
-      console.log(userInterests);
       this.values = userInterests.values;
     },
   },

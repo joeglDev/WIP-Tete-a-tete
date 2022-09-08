@@ -1,7 +1,6 @@
 <script setup>
 import { userStore } from "../stores/user";
 const profile = userStore();
-console.log(profile.img_url);
 </script>
 
 <template>

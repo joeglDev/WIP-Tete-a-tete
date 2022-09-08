@@ -109,3 +109,12 @@ describe("create user profile", () => {
       });
   });
 });
+
+/*
+1) Client sends x topics from frontend ["horse-rideing", "running"]
+2) Check topic exists in topics table:
+	- Yes: Get topic Id;
+	- No: Create topic and return id
+3) Get all entries from join table where user_id is that of incoming user profile
+4) Update all entries from join table with new incoming topics
+*/

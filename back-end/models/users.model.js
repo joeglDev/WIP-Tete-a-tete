@@ -41,8 +41,7 @@ WHERE users_topics_join.user_id =  $1;`,
     //checks for existing user_id
   if (rows.length === 0) {
     return rejectWhenNonExistent("users", "user_id", user_id);
-  
-  }
+  };
 
   return rows;
 };

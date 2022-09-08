@@ -23,7 +23,6 @@ exports.getUserTopics = async (req, res, next) => {
     });
     res.status(200).send({ user_topics: userTopics });
   } catch (error) {
-    console.log("in error")
     next(error);
   }
 };

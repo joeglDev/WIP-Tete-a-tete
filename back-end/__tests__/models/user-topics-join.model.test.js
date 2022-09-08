@@ -1,4 +1,14 @@
-const { selectUserTopics } = require("../../models/user-topic-join.model");
+const {
+  selectUserTopics,
+  updateUserTopic,
+  makeUpdateUserTopicProm,
+} = require("../../models/user-topic-join.model");
+const testData = require(`../../db/data/test-data/index.js`);
+const seed = require("../../db/seeds/seed");
+
+beforeEach(() => {
+  return seed(testData);
+});
 
 describe("selectUserTopics", () => {
   test("returns all user-topic joins for given user", async () => {
@@ -28,5 +38,19 @@ describe("selectUserTopics", () => {
 
     const expected = [];
     expect(actual).toEqual(expected);
+  });
+});
+
+describe("makeUpdateUserTopicProm ", () => {
+  test("returns promise with updated item when update successful", () => {
+    const joinIdInput = 1;
+    const topicIdInput = 2;
+
+    makeUpdateUserTopicProm(joinIdInput, topicIdInput).then(({ rows }) => {
+      const actual = rows[0];
+
+      const expected = { id: joinIdInput, user_id: 1, topic_id: topicIdInput };
+      expect(actual).toEqual(expected);
+    });
   });
 });

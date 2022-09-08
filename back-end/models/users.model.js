@@ -1,4 +1,3 @@
-
 const { HttpErrors } = require("../../shared/HttpErrors");
 
 const db = require(`${__dirname}/../db/connection.js`);
@@ -22,10 +21,18 @@ exports.updateUserProfile = async (user_id, userProfile) => {
   } = await db.query(
     "UPDATE users SET screen_name = $1, bio = $2, img_url = $3 WHERE user_id = $4 RETURNING *;",
     [screen_name, bio, img_url, user_id]
-  ); 
+  );
   if (!user) {
-   return Promise.reject(HttpErrors.itemNotFound)
+    return Promise.reject(HttpErrors.itemNotFound);
   }
-    return user;
-  
+  return user;
+};
+
+exports.selectUserTopics = async (user_id) => {
+  const {rows} = await db.query(`SELECT topic_name FROM topics 
+LEFT JOIN users_topics_join ON
+topics.topic_id = users_topics_join.topic_id
+WHERE users_topics_join.user_id =  $1;`, [user_id]);
+
+return rows
 };

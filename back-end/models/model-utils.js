@@ -14,12 +14,17 @@ exports.rejectWhenNonExistent = async (table, column, value) => {
   return [];
 };
 
-exports.getItem = async (table, column, value) => {
+exports.selectItemsWhere = async (table, column, value) => {
   const { rows } = await db.query(
     `SELECT * FROM ${table} WHERE ${column} = $1`,
     [value]
   );
-  return rows[0];
+  return rows;
+};
+
+exports.getItem = async (table, column, value) => {
+  const [item] = await this.selectItemsWhere(table, column, value);
+  return item;
 };
 
 exports.itemExists = async (table, column, value) => {

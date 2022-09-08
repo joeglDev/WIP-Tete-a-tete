@@ -1,15 +1,12 @@
 const format = require("pg-format");
 const db = require("../connection");
-
 const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
+  //drop existing tables
   await db.query(`DROP TABLE IF EXISTS users_topics_join;`);
   await db.query(`DROP TABLE IF EXISTS users;`);
   await db.query(`DROP TABLE IF EXISTS topics;`);
 
-// sometimes tables don't execute in correct order
-
   //creates tables
-
   const usersTablePromise = db.query(`
   CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -25,22 +22,17 @@ const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
     topic_name VARCHAR(25) NOT NULL
   );`);
 
-  const users_topics_joinTablePromise = db.query(`
+  await Promise.all([usersTablePromise, topicsTablePromise]);
+
+  //anon await function for many to many join table
+  await db.query(`
   CREATE TABLE users_topics_join (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NOT NULL,
     topic_id INT REFERENCES topics(topic_id) NOT NULL
   );`);
 
-  await Promise.all([usersTablePromise, topicsTablePromise])
-    .then(() => {
-      return users_topics_joinTablePromise;
-    })
-    .then(); 
-
-  // await users_topics_joinTablePromise;
-
-  // inserts data
+  //insert data into tables
 
   const insertUsersQueryStr = format(
     "INSERT INTO users ( username, screen_name, bio, img_url) VALUES %L RETURNING *;",
@@ -60,26 +52,22 @@ const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
     "INSERT INTO topics (topic_name) VALUES %L RETURNING *;",
     topicsData.map(({ topic_name }) => [topic_name])
   );
-
   const topicsPromise = db
     .query(insertTopicsQueryStr)
     .then((result) => result.rows);
+
+  await Promise.all([usersPromise, topicsPromise]);
 
   const insertUsers_Topics_JoinQueryStr = format(
     "INSERT INTO users_topics_join (user_id, topic_id) VALUES %L RETURNING *;",
     topics_users_joinData.map(({ user_id, topic_id }) => [user_id, topic_id])
   );
 
-  const users_Topics_JoinPromise = db
-    .query(insertUsers_Topics_JoinQueryStr)
-    .then((result) => result.rows);
-
-  await Promise.all([usersPromise, topicsPromise])
-    .then(() => {
-      return users_Topics_JoinPromise;
-    })
-    .then();
+  await db.query(insertUsers_Topics_JoinQueryStr).then((result) => result.rows);
+  // await Promise.all([usersPromise, topicsPromise])
+  //     .then(() => {
+  //       return users_Topics_JoinPromise;
+  //     }).then()
   // await users_Topics_JoinPromise;
 };
-
 module.exports = seed;

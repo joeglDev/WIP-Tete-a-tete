@@ -3,6 +3,11 @@ const request = require("supertest");
 const { Endpoints } = require("../../shared/Endpoints");
 const { HttpErrors } = require("../../shared/HttpErrors");
 const userData = require("../db/data/test-data/users");
+const seed = require("../db/seeds/seed");
+const data = require("../db/data/test-data/index");
+
+
+
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
@@ -166,4 +171,56 @@ describe("get user topics", () => {
         expect(body.msg).toBe(HttpErrors.invalidRequest.msg);
       });
   });
+});
+
+describe("update a specific user's topics", () => {
+  test("responds with status 200 and inserted topic if not included in topics table", () => {
+    const data = ["A"];
+    const body = { newTopics: data };
+    const expected = {
+      topic_id: 4,
+      topic_name: "A",
+    };
+    return request(app)
+      .patch(`${Endpoints.makeUsersTopicsEnd(2)}`)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.updatedTopics.upsertedTopics[0]).toEqual(expected);
+      });
+  });
+
+  test("responds with status 200 and inserted topics if not included in topics table", () => {
+    const data = ["A", "B"];
+    const body = { newTopics: data };
+    const expected = [
+      { topic_id: 5, topic_name: "A" },
+      {
+        topic_id: 6,
+        topic_name: "B",
+      },
+    ];
+    return request(app)
+      .patch(`${Endpoints.makeUsersTopicsEnd(2)}`)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.updatedTopics.upsertedTopics).toEqual(expected);
+      });
+  });
+  /*
+  test("responds with status code 201 and the updated array of topics", () => {
+    const data = ["A", "B", "C"];
+    const topicsToUpdate = { topicsToUpdate: data };
+    return request(app)
+      .patch(`${Endpoints.makeUsersTopicsEnd(2)}`)
+      .send(topicsToUpdate)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user_topics).toEqual(topicsToUpdate);
+      });
+  });
+  */
 });

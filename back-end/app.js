@@ -1,8 +1,7 @@
 const express = require("express");
 const { Endpoints } = require("../shared/Endpoints");
 const { authenticateUser } = require("./controllers/login.controller");
-const { patchUserProfile } = require("./controllers/users.controller");
-const {getUserTopics} = require("./controllers/users.controller");
+const { patchUserProfile, getUserTopics, patchUserTopics } = require("./controllers/users.controller");
 const app = express();
 
 //middleware
@@ -15,6 +14,7 @@ app.use(express.json());
 app.post(Endpoints.loginEnd, authenticateUser);
 app.patch(`${Endpoints.usersEnd}/:user_id`, patchUserProfile);
 app.get(`${Endpoints.makeUsersTopicsEnd(':user_id')}`, getUserTopics)
+app.patch(`${Endpoints.makeUsersTopicsEnd(':user_id')}`, patchUserTopics)
 
 //errors
 app.use((error, req, res, next) => {

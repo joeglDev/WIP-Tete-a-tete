@@ -1,6 +1,7 @@
 const {
   updateUserProfile,
   selectUserTopics,
+  updateUserTopics
 } = require("../models/users.model");
 
 exports.patchUserProfile = async (req, res, next) => {
@@ -24,5 +25,17 @@ exports.getUserTopics = async (req, res, next) => {
     res.status(200).send({ user_topics: userTopics });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.patchUserTopics = async (req, res) => {
+  const { user_id } = req.params;
+  const { newTopics} = req.body;
+ 
+  try {
+    const updatedTopics = await updateUserTopics(user_id, newTopics);
+    res.status(200).send({ updatedTopics });
+  } catch (error) {
+    console.log(error);
   }
 };

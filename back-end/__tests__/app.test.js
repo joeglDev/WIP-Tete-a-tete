@@ -6,9 +6,6 @@ const userData = require("../db/data/test-data/users");
 const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 
-
-
-
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
     const userLogin = {
@@ -173,6 +170,7 @@ describe("get user topics", () => {
   });
 });
 
+/*
 describe("update a specific user's topics", () => {
   test("responds with status 200 and inserted topic if not included in topics table", () => {
     const data = ["A"];
@@ -227,7 +225,6 @@ describe("update a specific user's topics", () => {
         expect(body.updatedTopics.upsertedTopics[0]).toEqual(expected);
       });
   })
-  /*
   test("responds with status code 201 and the updated array of topics", () => {
     const data = ["A", "B", "C"];
     const topicsToUpdate = { topicsToUpdate: data };
@@ -239,5 +236,6 @@ describe("update a specific user's topics", () => {
         expect(body.user_topics).toEqual(topicsToUpdate);
       });
   });
-  */
 });
+
+*/

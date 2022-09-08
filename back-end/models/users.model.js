@@ -5,7 +5,7 @@ const {
   insertItem,
   updateItem,
   itemExists,
-} = require("./model-utls.js");
+} = require("./model-utils.js");
 
 const db = require(`${__dirname}/../db/connection.js`);
 

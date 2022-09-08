@@ -36,6 +36,6 @@ exports.patchUserTopics = async (req, res) => {
     const updatedTopics = await updateUserTopics(user_id, newTopics);
     res.status(200).send({ updatedTopics });
   } catch (error) {
-    console.log(error);
+    console.log("In controller", error.code);
   }
 };

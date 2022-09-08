@@ -192,13 +192,13 @@ describe("update a specific user's topics", () => {
   });
 
   test("responds with status 200 and inserted topics if not included in topics table", () => {
-    const data = ["A", "B"];
+    const data = ["B", "C"];
     const body = { newTopics: data };
     const expected = [
-      { topic_id: 5, topic_name: "A" },
+      { topic_id: 5, topic_name: "B" },
       {
         topic_id: 6,
-        topic_name: "B",
+        topic_name: "C",
       },
     ];
     return request(app)
@@ -210,6 +210,23 @@ describe("update a specific user's topics", () => {
         expect(body.updatedTopics.upsertedTopics).toEqual(expected);
       });
   });
+
+  test("does not insert duplicates if inserts a new topic", () => {
+    const data = ["Topic A"];
+    const body = { newTopics: data };
+    const expected = {
+      topic_id: 1,
+      topic_name: "Topic A",
+    };
+    return request(app)
+      .patch(`${Endpoints.makeUsersTopicsEnd(1)}`)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.updatedTopics.upsertedTopics[0]).toEqual(expected);
+      });
+  })
   /*
   test("responds with status code 201 and the updated array of topics", () => {
     const data = ["A", "B", "C"];

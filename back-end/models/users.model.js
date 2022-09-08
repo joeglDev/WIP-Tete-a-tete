@@ -1,5 +1,11 @@
 const { HttpErrors } = require("../../shared/HttpErrors");
-const { rejectWhenNonExistent } = require("./model-utls.js");
+const {
+  rejectWhenNonExistent,
+  upsertItem,
+  insertItem,
+  updateItem,
+  itemExists,
+} = require("./model-utls.js");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
@@ -47,27 +53,35 @@ WHERE users_topics_join.user_id =  $1;`,
 };
 
 exports.updateUserTopics = async (user_id, newTopics) => {
-  //inserts new objects
-  //inserts only if
-  const insertPromises = [];
+  //use util func to check all topics exist
+  //if not remove from topicsArry
+
   newTopics.forEach((topic) => {
-    insertPromises.push(
-      db.query("INSERT INTO topics (topic_name) VALUES ($1) RETURNING *;", [
-        topic,
-      ])
-    );
+    upsertItem("topics", "topic_name", topic);
   });
-  const results = await Promise.all(insertPromises);
-  const upsertTopicResults = results.map((result) => {
-    return result.rows[0];
-  });
-  return {upsertedTopics: upsertTopicResults}
-  //console.log(result[0].rows[0]);
-  /*
+};
+
+/*
+    const insertPromises = [];
+    newTopics.forEach((topic) => {
+      insertPromises.push(
+        db.query("INSERT INTO topics (topic_name) VALUES ($1) RETURNING *;", [
+          topic,
+        ])
+      );
+    });
+    const results = await Promise.all(insertPromises);
+    const upsertTopicResults = results.map((result) => {
+      return result.rows[0];
+    });
+    return { upsertedTopics: upsertTopicResults };
+ */
+
+//console.log(result[0].rows[0]);
+/*
 //update topics table
 const {rows} = await db.query(`UPDATE topics SET topic_name = $1`, [])
 */
-};
 
 /*
 1) Client sends x topics from frontend ["horse-rideing", "running"]

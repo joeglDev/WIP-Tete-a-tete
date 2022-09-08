@@ -137,8 +137,15 @@ describe("get user topics", () => {
       .get(`${Endpoints.makeUsersTopicsEnd(1)}`)
       .expect(200)
       .then(({ body }) => {
-        expect(body.user_topics).toEqual(["Topic A", "Topic B", "Topic C"]
-        );
+        expect(body.user_topics).toEqual(["Topic A", "Topic B", "Topic C"]);
+      });
+  });
+  test("returns status code 200 and a empty array object of topics for a user with no topics", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd(2)}`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user_topics).toEqual([]);
       });
   });
 });

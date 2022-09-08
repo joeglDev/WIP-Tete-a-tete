@@ -1,0 +1,339 @@
+@font-face {
+  font-family: 'lemurregular';
+  src: url('../assets//fonts/lemur-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+/* general body styling */
+body {
+  background-color: #EAE4D7;
+  font-family: "lemurregular";
+  font-size: 18px;
+}
+h1 {
+font-family: "lemurregular";
+font-size: 40px;
+}
+h2 {
+  font-family: "lemurregular";
+  font-size: 28px;
+} 
+    .container{
+      margin: auto;
+      margin-top: 250px;
+      display: grid;
+      grid-template-areas: "icon-1 logo logo . . ."
+        "tagline tagline tagline tagline tagline tagline"
+        "syno-1 syno-1 icon-2 syno-2 syno-2 icon-3";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(6, 1fr);
+      height: 400px;
+      width: 1030px;
+    }
+
+    .join-us-container{
+      margin: auto;
+      margin-top: 150px;
+      display: grid;
+      grid-template-areas: "icon-1 logo logo . . ."
+        "tagline tagline tagline tagline tagline tagline"
+        "syno-1 syno-1 icon-2 syno-2 syno-2 icon-3";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(6, 1fr);
+      height: 400px;
+      width: 1030px;
+    }
+    
+    .item {
+      background-color: #eae4d7;
+      outline: 2px solid #231e21;
+      justify-content: center;
+      align-content: center;
+    }
+    
+    .one {
+      display: grid;
+      grid-area: icon-1;
+    }
+    
+    .two {
+      display: grid;
+      grid-area: logo;
+      background-color: #231e21;
+    }
+    
+    .three {
+      display: grid;
+      grid-area: tagline;
+      font-size: 40px;
+    }
+    
+    .four {
+      display: grid;
+      grid-area: syno-1;
+      font-size: 28px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    
+    .five {
+      display: grid;
+      grid-area: icon-2;
+    }
+    
+    .six {
+      display: grid;
+      grid-area: syno-2;
+      text-align: center;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+    
+    .seven {
+      display: grid;
+      grid-area: icon-3;
+    }
+
+    .chat-icon {
+      height: 60px
+    }
+
+    .light-logo {
+      width: 200px
+    }
+
+    .mic-icon {
+     height: 60px
+    }
+
+    .paper-clip-icon {
+      height: 60px
+     }
+
+     .arrow-icon {
+      height: 60px;
+     }
+
+     .button-icon {
+      width: 60px;
+     }
+
+     .join-us-text {
+      color: #EAE4D7;
+     }
+
+     .button-background {
+       background-color: #231e21;
+     }
+
+      .interests-container {
+      margin: auto;
+      margin-top: 150px;
+      display: grid;
+      grid-template-areas: "headline headline headline headline"
+        " tagline-1 tagline-1 tagline-2 tagline-2"
+        "image-1 image-2 image-3 image-4";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(4, 1fr);
+      height: 400px;
+      width: 1030px;
+    }
+    
+    .item-interests {
+      background-color: #eae4d7;
+      outline: 2px solid #231e21;
+      justify-content: center;
+      align-content: center;
+    }
+    
+    .one-interests {
+      display: grid;
+      grid-area: headline;
+      background-color: #231e21;
+      color: #EAE4D7;
+    }
+    
+    .two-interests {
+      display: grid;
+      grid-area: tagline-1;
+      color: #231e21;
+      font-size: 28px;
+    }
+    
+    .three-interests {
+      display: grid;
+      grid-area: tagline-2;
+      color: #231e21;
+      font-size: 28px;
+    }
+    
+    .four-interests {
+      display: grid;
+      grid-area: image-1;
+      font-size: 28px;
+      text-align: center;
+      line-height: 1.2;
+      background-color: #231e21;
+    }
+    
+    .five-interests {
+      display: grid;
+      grid-area: image-2;
+    }
+    
+    .six-interests {
+      display: grid;
+      grid-area: image-3;
+      text-align: center;
+      font-size: 28px;
+      line-height: 1.2;
+      background-color: #231e21;
+    }
+    
+    .seven-interests {
+      display: grid;
+      grid-area: image-4;
+    } 
+
+    .alarm-icon {
+      height: 60px;
+     }
+
+    .satellite-icon {
+      height: 60px;
+     } 
+    
+     .image-icon {
+      height: 60px;
+     } 
+
+     .add-icon {
+      height: 60px;
+     } 
+
+     .loving-text {
+       text-align: center;
+       line-height: 1.2;
+     }
+
+     .new-interests-text {
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .login-container {
+      margin: auto;
+      margin-top: 150px;
+      display: grid;
+      grid-template-areas: "chat-icon logo logo . . ."
+        "tagline tagline tagline tagline tagline tagline"
+        "username username username username username username";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(6, 1fr);
+      height: 400px;
+      width: 1030px;
+    }
+
+    .one-login {
+      display: grid;
+      grid-area: chat-icon;
+    }
+
+    .two-login {
+      display: grid;
+      grid-area: logo;
+      background-color: #231e21;
+    }
+
+    .three-login {
+      display: grid;
+      grid-area: tagline;
+    }
+
+    .four-login {
+      display: grid;
+      grid-area: username;
+      text-align: center;
+    }
+
+    
+    input, button, textarea {
+      background-color:#EAE4D7;
+      outline: none;
+      padding: 1em;
+      border: solid #231e21 2px;
+      margin-top: 10px;
+    }
+
+    .username-label {
+      margin-bottom: 100px;
+    }
+
+    .login-submit {
+    width: 800px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    }
+
+    .login-submit-button {
+      background-color: #231e21;
+      color:#EAE4D7
+    }
+
+    .user-box {
+      outline: #231e21 solid 2px;
+      width: 150px;
+      height: 200px;
+      top: 50px;
+      right: 206px;
+      position: absolute;
+      display: grid;
+      text-align: center;
+    }
+
+
+    
+
+    .screen-name-text{
+      grid-row: 1;
+      background-color: #231e21;
+      color: #EAE4D7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .user-image{
+      grid-row: 2/4;
+      outline: #231e21 solid 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .user-image img {
+      width: 80px;
+
+    }
+
+    h4{
+      font-size: 28px;
+      font-family: "lemurregular";
+      line-height: 0em;
+    }
+
+    .add-interests-container {
+      margin: auto;
+      margin-top: 150px;
+      display: grid;
+      grid-template-areas: "headline headline headline headline"
+        " tagline-1 tagline-1 tagline-2 tagline-2"
+        "image-1 image-2 image-3 image-4";
+      grid-template-rows: 1fr 2fr 2fr;
+      grid-template-columns: repeat(4, 1fr);
+      height: 400px;
+      width: 1030px;
+    }

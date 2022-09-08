@@ -1,4 +1,5 @@
 const { HttpErrors } = require("../../shared/HttpErrors");
+const { rejectWhenNonExistent } = require("./model-utls.js");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
@@ -29,10 +30,19 @@ exports.updateUserProfile = async (user_id, userProfile) => {
 };
 
 exports.selectUserTopics = async (user_id) => {
-  const {rows} = await db.query(`SELECT topic_name FROM topics 
+  const { rows } = await db.query(
+    `SELECT topic_name FROM topics 
 LEFT JOIN users_topics_join ON
 topics.topic_id = users_topics_join.topic_id
-WHERE users_topics_join.user_id =  $1;`, [user_id]);
+WHERE users_topics_join.user_id =  $1;`,
+    [user_id]
+  );
 
-return rows
+    //checks for existing user_id
+  if (rows.length === 0) {
+    return rejectWhenNonExistent("users", "user_id", user_id);
+  
+  }
+
+  return rows;
 };

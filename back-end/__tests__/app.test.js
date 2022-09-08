@@ -148,4 +148,13 @@ describe("get user topics", () => {
         expect(body.user_topics).toEqual([]);
       });
   });
+
+  test("returns status code 404 and an error message for user_id not found", () => {
+    return request(app)
+      .get(`${Endpoints.makeUsersTopicsEnd(999)}`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe(HttpErrors.itemNotFound.msg);
+      });
+  });
 });

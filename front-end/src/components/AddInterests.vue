@@ -126,8 +126,10 @@ const interestsSubmit = (event) => {
   event.preventDefault();
 
   interestsArray.setInterestsArray({
-    values: ["sol", null, null, null, null, null, null, null, null, null],
+    values: [null, null, null, null, null, null, null, null, null, null],
   });
   console.log(interestsArray);
 };
 </script>
+
+//

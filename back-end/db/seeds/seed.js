@@ -29,7 +29,7 @@ const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
   CREATE TABLE users_topics_join (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NOT NULL,
-    topic_id INT REFERENCES topics(topic_id) NOT NULL
+    topic_id INT REFERENCES topics(topic_id) 
   );`);
 
   //insert data into tables

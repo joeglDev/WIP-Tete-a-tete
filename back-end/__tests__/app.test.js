@@ -179,11 +179,35 @@ describe("PATCH / UPDATE user topics", () => {
     })
   });
 
-  test("returns http status code of 200 and a array of updated topics for topics of a specific user", () => {
+  test("returns http status code of 200 and a array of updated topics for topics of a specific user if many new topic", () => {
     const newTopics = { new_topics : ["A", "B", "C"]};
     const expected = {updated_topics: ["A", "B", "C"]};
     return request(app)
     .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+
+  test("returns http status code of 200 and a array of updated topics for an empty array of input topics", () => {
+    const newTopics = { new_topics : []};
+    const expected = {updated_topics: []};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+
+  test("returns http status code of 200 and a array of updated topics for an empty array of input topics if a topic is preexisting", () => {
+    const newTopics = { new_topics : ["Topic A", "B", "C"]};
+    const expected = {updated_topics: ["Topic A", "B", "C"]};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(1))
     .send(newTopics)
     .expect(200)
     .then(({body}) => {

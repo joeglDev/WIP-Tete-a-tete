@@ -48,23 +48,3 @@ exports.getItemAndInsertWhenNonExistent = async (table, col, val) => {
   if (item === undefined) return await this.insertItem(table, col, val);
   return item;
 };
-
-/*
-upsertItem, insertItem, updateItem, itemExists;
-
-exports.upsertItem = (table, column, value) => {
-  if (itemExists(table, column, value)) {
-    updateItem(table, column, value);
-  } else {
-    insertItem(table, column, value);
-  }
-};
-
-exports.updateItem = async (table, column, value) => {
-  const { rows } = await db.query(
-    `UPDATE ${table} SET ${column} = $1 RETURNING *;`,
-    [value]
-  );
-  return rows;
-};
-*/

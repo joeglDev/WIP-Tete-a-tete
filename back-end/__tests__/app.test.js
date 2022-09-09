@@ -3,8 +3,12 @@ const request = require("supertest");
 const { Endpoints } = require("../../shared/Endpoints");
 const { HttpErrors } = require("../../shared/HttpErrors");
 const userData = require("../db/data/test-data/users");
+const testData = require(`../db/data/test-data/index.js`);
 const seed = require("../db/seeds/seed");
-const data = require("../db/data/test-data/index");
+
+beforeEach(() => {
+  return seed(testData);
+});
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {

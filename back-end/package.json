@@ -7,6 +7,7 @@
     "setup": "psql -f ./db/setup.sql",
     "seed": "node ./db/seeds/run-seed.js",
     "test": "NODE_ENV=test node ./db/seeds/run-seed.js && jest",
+    "test-app" : "npm test app.test.js",
     "start": "node listen.js"
   },
   "keywords": [],

@@ -2,6 +2,13 @@ const {
   selectTopicAndInsertIfNonExistent: getTopicAndInsertIfNonExistent,
 } = require("../../models/topicss.model");
 
+const testData = require(`../../db/data/test-data/index.js`);
+const seed = require("../../db/seeds/seed");
+
+beforeEach(() => {
+  return seed(testData);
+});
+
 describe("getTopicAndInsertIfNonExistent", () => {
   test("returns inserted entry if given topic was not in db", async () => {
     const topicInput = "Non-existent";

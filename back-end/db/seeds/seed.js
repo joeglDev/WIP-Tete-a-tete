@@ -4,9 +4,11 @@ const seed = async ({
   usersData,
   topicsData,
   conversationsData,
+  conversationsJoinData,
   topics_users_joinData,
 }) => {
   //drop existing tables
+  await db.query(`DROP TABLE IF EXISTS topic_conversations_join;`);
   await db.query(`DROP TABLE IF EXISTS users_topics_join;`);
   await db.query(`DROP TABLE IF EXISTS conversations;`);
   await db.query(`DROP TABLE IF EXISTS users;`);
@@ -100,5 +102,16 @@ const seed = async ({
   );
 
   await db.query(insertUsers_Topics_JoinQueryStr).then((result) => result.rows);
+
+  const insertConversationsJoin = format(
+    `INSERT INTO topic_conversations_join (user_id, conversation_id, topic_id) VALUES %L RETURNING *; `,
+    conversationsJoinData.map(({ user_id, conversation_id, topic_id }) => [
+      user_id,
+      conversation_id,
+      topic_id,
+    ])
+  );
+
+  await db.query(insertConversationsJoin).then((result) => result.rows);
 };
 module.exports = seed;

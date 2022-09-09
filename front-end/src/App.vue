@@ -6,6 +6,7 @@ import AddInterests from "./components/AddInterests.vue";
 import router from "./router";
 import Login from "./components/Login.vue";
 import UserBox from "./components/UserBox.vue";
+import Footer from "./components/Footer.vue";
 </script>
 
 <template>
@@ -19,5 +20,6 @@ import UserBox from "./components/UserBox.vue";
     <Interests />
     <AddInterests />
     <Login /> -->
+    <!-- <Footer /> -->
   </header>
 </template>

@@ -398,3 +398,51 @@ h4 {
   text-decoration: none;
   border: none;
 }
+
+.trending-container {
+  background-color: #231e21;
+  height: 100px;
+  width: 1030px;
+  margin: auto;
+  color: #eae4d7;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trending-container h2 {
+  font-size: 40px;
+}
+
+.subscribe-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 28px;
+  line-height: 0.1em;
+}
+
+.footer-container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer-logo {
+  width: 150px;
+  padding: 20px;
+}
+
+.email-box {
+  width: 300px;
+}
+
+.copyright-text {
+  position: absolute;
+  right: 100px;
+}

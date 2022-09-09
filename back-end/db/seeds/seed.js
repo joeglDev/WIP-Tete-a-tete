@@ -50,7 +50,15 @@ const seed = async ({
     topic_id INT REFERENCES topics(topic_id) 
   );`);
 
-  
+  await db.query(`
+  CREATE TABLE topic_conversations_join (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id) NOT NULL,
+    conversation_id INT REFERENCES conversations(conversation_id) NOT NULL,
+    topic_id INT REFERENCES topics(topic_id) NOT NULL
+  );
+  `);
+
   //insert data into tables
 
   const insertUsersQueryStr = format(

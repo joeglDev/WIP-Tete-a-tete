@@ -12,8 +12,10 @@
 import axios from "axios";
 import { ref, reactive, defineProps } from "vue";
 import { userStore } from "../stores/user";
+import fetchTopics from "../utils/fetchTopics";
 
-const fetchTopics = require("./AddInterests.vue")
+
+
 
 const profile = userStore();
 
@@ -31,14 +33,17 @@ const loginSubmit = (event) => {
     .then((response) => {
       if (response.status === 200) {
         profile.setProfile(response.data.user);
-        console.log(profile.user_id)
-        console.log(fetchTopics(1))
+        fetchTopics(profile.user_id)
+
       }
     })
     .catch((error) => {
-      if (error.response.status === 401) {
+      if (error.response.status === 401){
         alert("invalid user!");
       }
     });
 };
 </script>
+
+
+<!-- if (error.response.status === 401) -->

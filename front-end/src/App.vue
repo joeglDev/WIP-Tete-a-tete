@@ -6,7 +6,6 @@ import Login from "./components/Login.vue";
 import UserBox from "./components/UserBox.vue";
 import AddInterests from "./components/AddInterests.vue"
 
-
 </script>
 
 <template>

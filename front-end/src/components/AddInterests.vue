@@ -129,27 +129,8 @@
 <script setup>
 import { ref, reactive, defineProps } from "vue";
 import { interestsStore } from "../stores/interestsStore";
-import axios from "axios";
-import { userStore } from "../stores/user";
 const interestsArray = interestsStore();
 const props = defineProps([]);
-const profile = userStore();
-
-
-const fetchTopics = (id)=>{
-axios
-    .get(`http://localhost:9090/users/${id}/topics`).then((response)=>interestsOverwriter(response.data.user_topics)).catch((err)=>{console.log(err)})
-
-  const interestsOverwriter = (fetchedTopics) => {
-      for (let i=0; i<fetchedTopics.length; i++){
-          interestsArray.values[i] = fetchedTopics[i]
-         }
-  }}
-
-    const interestsSubmit = (event) => {
-  event.preventDefault(); 
-  console.log("Its just me, interestsSubmit doing my thing...")
-}
 </script>
 
 

@@ -9,7 +9,7 @@ export const interestsStore = defineStore("interests", {
   },
   actions: {
     setInterestsArray(userInterests) {
-      this.values = userInterests.values;
+      this.values = userInterests;
     },
   },
 });

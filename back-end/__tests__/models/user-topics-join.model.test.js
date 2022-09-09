@@ -56,10 +56,8 @@ describe("makeUpdateUserTopicProm ", () => {
   });
 });
 
-
-
 describe("updateUserTopics", () => {
-  test("returns 200 and a list of updated userTopic joins", async () => {
+  test("returns a list of updated userTopic joins", async () => {
     const topicsInput = [
       { id: 1, user_id: 1, topic_id: null },
       { id: 2, user_id: 1, topic_id: 1 },
@@ -72,15 +70,12 @@ describe("updateUserTopics", () => {
       { id: 9, user_id: 1, topic_id: null },
       { id: 10, user_id: 1, topic_id: null },
     ];
-    console.log("in test")
     const actual = await updateUserTopics(topicsInput);
     const expected = [...topicsInput];
 
-   // expect(actual).not.toBe(topicsInput);
+    expect(actual).not.toBe(topicsInput);
 
     expect(actual).toEqual(expected);
-
-
   });
 });
 

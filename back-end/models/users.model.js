@@ -6,6 +6,9 @@ const {
   updateItem,
   itemExists,
 } = require("./model-utils.js");
+const {updateUserTopics} = require("./user-topic-join.model");
+const {selectUserTopics} = require("./user-topic-join.model");
+const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
@@ -52,14 +55,56 @@ WHERE users_topics_join.user_id =  $1;`,
   return rows;
 };
 
-exports.updateUserTopics = async (user_id, newTopics) => {
-  //use util func to check all topics exist
-  //if not remove from topicsArry
 
-  newTopics.forEach((topic) => {
-    upsertItem("topics", "topic_name", topic);
+/*
+1) Client sends x topics from frontend ["horse-rideing", "running"]
+2) Check topic exists in topics table:
+	- Yes: Get topic Id;
+	- No: Create topic and return id
+3) Get all entries from join table where user_id is that of incoming user profile
+4) Update all entries from join table with new incoming topics
+*/
+
+exports.updateUserTopics = async (user_id, new_topics) => {
+
+  const newTopicsList = [];  // [ { returns topic_id, topic_name } ]
+  const newTopicsPromises = new_topics.map((topic) => {
+    return selectTopicAndInsertIfNonExistent(topic);
   });
-};
+  const topicsInsert = await Promise.all(newTopicsPromises); // [ { returns topic_id, topic_name } ]
+
+  const existingJoin = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
+  existingJoin.forEach((join, index) => {
+    if (topicsInsert[index] === undefined) {
+      join.topic_id = null;
+    } else {
+      join.topic_id = topicsInsert[index].topic_id;
+    }
+  });
+  console.log("new join data to insert", existingJoin)
+
+  const updatedTopicsJoin = await updateUserTopics(existingJoin); //returns new join data [{id, user_id, topic_id}]
+  
+  if (updatedTopicsJoin.length === 10) {
+    return new_topics
+  }
+  
+
+
+  /*
+  const topic = new_topics[0];
+    const topicInDB = await selectTopicAndInsertIfNonExistent(topic); //returns topic_id, topic_name
+    const existingJoin = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
+    console.log("new topic table entry", topicInDB);
+    console.log("existing join", existingJoin)
+    //EDITING existing Join
+    existingJoin.forEach((join) => {
+      const newJoin = ;
+    })
+    //make new join -> edit join data for new topics then give to updatedTopicsResult
+    // const updatedTopicsResult = await updateUserTopics(); grab new join array 
+    */
+  };
 
 /*
     const insertPromises = [];

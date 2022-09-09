@@ -1,7 +1,7 @@
 const {
   updateUserProfile,
   selectUserTopics,
-  updateUserTopics
+  updateUserTopics,
 } = require("../models/users.model");
 
 exports.patchUserProfile = async (req, res, next) => {
@@ -30,12 +30,13 @@ exports.getUserTopics = async (req, res, next) => {
 
 exports.patchUserTopics = async (req, res) => {
   const { user_id } = req.params;
-  const { newTopics} = req.body;
- 
+  const { new_topics } = req.body;
+
   try {
-    const updatedTopics = await updateUserTopics(user_id, newTopics);
-    res.status(200).send({ updatedTopics });
+    const updatedTopics = await updateUserTopics(user_id, new_topics);
+    const returnBody = { updated_topics: updatedTopics };
+    res.status(200).send(returnBody);
   } catch (error) {
-    console.log("In controller", error.code);
+    console.log("In controller error block", error);
   }
 };

@@ -178,6 +178,18 @@ describe("PATCH / UPDATE user topics", () => {
       expect(body).toEqual(expected);
     })
   });
+
+  test("returns http status code of 200 and a array of updated topics for topics of a specific user", () => {
+    const newTopics = { new_topics : ["A", "B", "C"]};
+    const expected = {updated_topics: ["A", "B", "C"]};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
 });
 
 

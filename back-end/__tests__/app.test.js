@@ -3,6 +3,12 @@ const request = require("supertest");
 const { Endpoints } = require("../../shared/Endpoints");
 const { HttpErrors } = require("../../shared/HttpErrors");
 const userData = require("../db/data/test-data/users");
+const testData = require(`../db/data/test-data/index.js`);
+const seed = require("../db/seeds/seed");
+
+beforeEach(() => {
+  return seed(testData);
+});
 
 describe("log in and user authentication", () => {
   test("returns 401 with error message if username isn't found", () => {
@@ -122,14 +128,6 @@ describe("create user profile", () => {
   });
 });
 
-/*
-1) Client sends x topics from frontend ["horse-rideing", "running"]
-2) Check topic exists in topics table:
-	- Yes: Get topic Id;
-	- No: Create topic and return id
-3) Get all entries from join table where user_id is that of incoming user profile
-4) Update all entries from join table with new incoming topics
-*/
 
 describe("get user topics", () => {
   test("returns status code 200 and a array object of topics for a user with topics", () => {
@@ -167,3 +165,55 @@ describe("get user topics", () => {
       });
   });
 });
+
+describe("PATCH / UPDATE user topics", () => {
+  test("returns http status code of 200 and a array of updated topics for topics of a specific user", () => {
+    const newTopics = { new_topics : ["A"]};
+    const expected = {updated_topics: ["A"]};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+
+  test("returns http status code of 200 and a array of updated topics for topics of a specific user if many new topic", () => {
+    const newTopics = { new_topics : ["A", "B", "C"]};
+    const expected = {updated_topics: ["A", "B", "C"]};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+
+  test("returns http status code of 200 and a array of updated topics for an empty array of input topics", () => {
+    const newTopics = { new_topics : []};
+    const expected = {updated_topics: []};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(2))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+
+  test("returns http status code of 200 and a array of updated topics for an empty array of input topics if a topic is preexisting", () => {
+    const newTopics = { new_topics : ["Topic A", "B", "C"]};
+    const expected = {updated_topics: ["Topic A", "B", "C"]};
+    return request(app)
+    .patch(Endpoints.makeUsersTopicsEnd(1))
+    .send(newTopics)
+    .expect(200)
+    .then(({body}) => {
+      expect(body).toEqual(expected);
+    })
+  });
+});
+
+

@@ -19,7 +19,7 @@ const seed = async ({ usersData, topicsData, topics_users_joinData }) => {
   const topicsTablePromise = db.query(`
   CREATE TABLE topics (
     topic_id SERIAL PRIMARY KEY,
-    topic_name VARCHAR(25) NOT NULL
+    topic_name VARCHAR(25) NOT NULL UNIQUE
   );`);
 
   await Promise.all([usersTablePromise, topicsTablePromise]);

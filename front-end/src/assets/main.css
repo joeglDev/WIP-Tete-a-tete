@@ -21,7 +21,7 @@ h2 {
 }
 .container {
   margin: auto;
-  margin-top: 275px;
+  margin-top: 150px;
   display: grid;
   grid-template-areas:
     "icon-1 logo logo . . ."
@@ -36,6 +36,7 @@ h2 {
 .join-us-container {
   margin: auto;
   margin-top: 150px;
+  margin-bottom: 150px;
   display: grid;
   grid-template-areas:
     "icon-1 logo logo . . ."
@@ -119,6 +120,11 @@ h2 {
 
 .button-icon {
   width: 60px;
+}
+
+.button-icon:hover {
+  transform: rotate(90deg);
+  transition-duration: 0.5s;
 }
 
 .join-us-text {
@@ -391,4 +397,52 @@ h4 {
 .add-button {
   text-decoration: none;
   border: none;
+}
+
+.trending-container {
+  background-color: #231e21;
+  height: 100px;
+  width: 1030px;
+  margin: auto;
+  color: #eae4d7;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trending-container h2 {
+  font-size: 40px;
+}
+
+.subscribe-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 28px;
+  line-height: 0.1em;
+}
+
+.footer-container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer-logo {
+  width: 150px;
+  padding: 20px;
+}
+
+.email-box {
+  width: 300px;
+}
+
+.copyright-text {
+  position: absolute;
+  right: 100px;
 }

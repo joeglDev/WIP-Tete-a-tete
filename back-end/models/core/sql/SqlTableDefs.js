@@ -1,10 +1,14 @@
+const { PrefixedField } = require("./PrefixedField");
+
 class SqlTableDefs {
   #_tableName;
   #_fields;
+  #_prefixed;
 
   constructor(tableName, fields) {
     this.#_tableName = tableName;
     this.#_fields = fields;
+    this.#_prefixed = new PrefixedField(this.tableName, this.fields);
   }
 
   get tableName() {
@@ -13,6 +17,10 @@ class SqlTableDefs {
 
   get fields() {
     return this.#_fields;
+  }
+
+  get prefixedField() {
+    return this.#_prefixed;
   }
 }
 

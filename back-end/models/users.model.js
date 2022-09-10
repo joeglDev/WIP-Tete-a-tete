@@ -3,7 +3,7 @@ const { rejectWhenNonExistent } = require("./model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");
 const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
-const { SqlUsersTable } = require("./core/UsersSqlTable");
+const { SqlUsersTable } = require("./core/SqlUsersTable");
 const { SqlQuerier } = require("./core/sql/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);

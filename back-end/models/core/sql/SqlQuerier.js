@@ -5,6 +5,10 @@ class SqlQuerier {
     this.#_db = db;
   }
 
+  get db() {
+    return this.#_db;
+  }
+
   async insertItems(table, columns, values) {
     const colsStr = columns.join(columns);
     const valsStr = values.map((val, idx) => `$${idx + 1}`).join(", ");

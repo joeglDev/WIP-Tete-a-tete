@@ -16,7 +16,6 @@ class SqlUsersTable extends SqlTableDefs {
   }
 
   async selectUserByUsername(username) {
-    console.log("In userrs table username method");
     return await this.#_sqlQuerier.selectItemWhere(
       this.tableName,
       this.fields.username,
@@ -28,6 +27,20 @@ class SqlUsersTable extends SqlTableDefs {
         this.fields.imageUrl,
       ]
     );
+  }
+
+  async updateUserProfile(userId, newProfile) {
+    const { screen_name, bio, img_url } = newProfile;
+    const queryStr = `UPDATE ${this.tableName} SET ${this.fields.screenName} = $1, ${this.fields.bio} = $2, ${this.fields.imageUrl} = $3 WHERE ${this.fields.userId} = $4 RETURNING *;`;
+    const {
+      rows: [user],
+    } = await this.#_sqlQuerier.db.query(queryStr, [
+      screen_name,
+      bio,
+      img_url,
+      userId,
+    ]);
+    return user;
   }
 }
 

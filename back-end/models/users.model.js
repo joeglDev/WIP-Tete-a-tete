@@ -1,13 +1,10 @@
 const { HttpErrors } = require("../../shared/HttpErrors");
-const { rejectWhenNonExistent } = require("./model-utils.js");
+const { rejectWhenNonExistent, gQuerier } = require("./model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");
 const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
-const { SqlQuerier } = require("./utils/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);
-
-const gQuerier = new SqlQuerier(db);
 
 exports.selectUserByUsername = async (username) => {
   const user = await gQuerier.selectItemWhere("users", "username", username, [
@@ -66,8 +63,8 @@ exports.updateUserTopics = async (user_id, topicsFromUser) => {
   });
   const topicsTableEntries = await Promise.all(selectTopicPromises); // [ { returns topic_id, topic_name } ]
 
-  const existingJoin = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
-  existingJoin.forEach((join, index) => {
+  const existingJoinState = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
+  existingJoinState.forEach((join, index) => {
     if (topicsTableEntries[index] === undefined) {
       join.topic_id = null;
     } else {
@@ -75,7 +72,7 @@ exports.updateUserTopics = async (user_id, topicsFromUser) => {
     }
   });
 
-  const updatedTopicsJoin = await updateUserTopics(existingJoin); //returns new join data [{id, user_id, topic_id}]
+  const updatedTopicsJoin = await updateUserTopics(existingJoinState); //returns new join data [{id, user_id, topic_id}]
 
   if (updatedTopicsJoin.length === 10) {
     return topicsFromUser;

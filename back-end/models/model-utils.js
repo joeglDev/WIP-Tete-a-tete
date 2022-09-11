@@ -1,6 +1,9 @@
 const { HttpErrors } = require("../../shared/HttpErrors");
+const { SqlQuerier } = require("./utils/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);
+
+exports.gQuerier = new SqlQuerier(db);
 
 exports.rejectWhenNonExistent = async (table, column, value) => {
   const { rows } = await db.query(

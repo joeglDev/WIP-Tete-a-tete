@@ -1,7 +1,6 @@
-const db = require(`${__dirname}/../db/connection.js`);
-const { SqlQuerier } = require("./utils/SqlQuerier");
+const { gQuerier } = require("./model-utils");
 
-const gQuerier = new SqlQuerier(db);
+const db = require(`${__dirname}/../db/connection.js`);
 
 exports.selectTopicAndInsertIfNonExistent = async (topic) => {
   return await gQuerier.selectItemAndInsertWhenNonExistent(

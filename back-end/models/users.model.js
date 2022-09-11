@@ -3,6 +3,7 @@ const { rejectWhenNonExistent, gQuerier } = require("./utils/model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");
 const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
+const { SqlQuerier } = require("./utils/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
@@ -58,23 +59,36 @@ WHERE users_topics_join.user_id =  $1;`,
 */
 
 exports.updateUserTopics = async (user_id, topicsFromUser) => {
-  const selectTopicPromises = topicsFromUser.map((topic) => {
-    return selectTopicAndInsertIfNonExistent(topic);
-  });
-  const topicsTableEntries = await Promise.all(selectTopicPromises); // [ { returns topic_id, topic_name } ]
+  const dbClient = await gQuerier.db.connect();
+  const querierClient = new SqlQuerier(dbClient);
+  try {
+    await dbClient.query("BEGIN");
+    const selectTopicPromises = topicsFromUser.map((topic) => {
+      return selectTopicAndInsertIfNonExistent(querierClient, topic);
+    });
+    const topicsTableEntries = await Promise.all(selectTopicPromises); // [ { returns topic_id, topic_name } ]
 
-  const existingJoinState = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
-  existingJoinState.forEach((join, index) => {
-    if (topicsTableEntries[index] === undefined) {
-      join.topic_id = null;
-    } else {
-      join.topic_id = topicsTableEntries[index].topic_id;
+    const existingJoinState = await selectUserTopics(querierClient, user_id); // returns join [{id, user_id, topic_id}]
+    existingJoinState.forEach((join, index) => {
+      if (topicsTableEntries[index] === undefined) {
+        join.topic_id = null;
+      } else {
+        join.topic_id = topicsTableEntries[index].topic_id;
+      }
+    });
+
+    const updatedTopicsJoin = await updateUserTopics(
+      querierClient,
+      existingJoinState
+    ); //returns new join data [{id, user_id, topic_id}]
+    await dbClient.query("COMMIT");
+    if (updatedTopicsJoin.length === 10) {
+      return topicsFromUser;
     }
-  });
-
-  const updatedTopicsJoin = await updateUserTopics(existingJoinState); //returns new join data [{id, user_id, topic_id}]
-
-  if (updatedTopicsJoin.length === 10) {
-    return topicsFromUser;
+  } catch (err) {
+    await dbClient.query("ROLLBACK");
+    throw err;
+  } finally {
+    dbClient.release();
   }
 };

@@ -61,7 +61,6 @@ WHERE users_topics_join.user_id =  $1;`,
 */
 
 exports.updateUserTopics = async (user_id, topicsFromUser) => {
-  const newTopicsList = []; // [ { returns topic_id, topic_name } ]
   const selectTopicPromises = topicsFromUser.map((topic) => {
     return selectTopicAndInsertIfNonExistent(topic);
   });

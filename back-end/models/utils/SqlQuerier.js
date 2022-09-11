@@ -5,41 +5,48 @@ class SqlQuerier {
     this.#_db = db;
   }
 
-  async insertItems(table, cols, vals) {
-    const colsStr = cols.join(cols);
-    const valsStr = vals.map((val, idx) => `$${idx + 1}`).join(", ");
+  get db() {
+    return this.#_db;
+  }
+
+  async insertItems(table, columns, values) {
+    const colsStr = columns.join(columns);
+    const valsStr = values.map((val, idx) => `$${idx + 1}`).join(", ");
     const { rows } = await this.#_db.query(
       "INSERT INTO ${table} (${colsStr}) VALUES (${valsStr}) RETURNING *;",
-      vals
+      values
     );
     return rows;
   }
 
-  async insertItem(table, col, val) {
-    return await this.insertItems(table, [col], [val])[0];
+  async insertItem(table, column, value) {
+    return await this.insertItems(table, [column], [value])[0];
   }
 
-  async selectItemAndInsertWhenNonExistent(table, col, val) {
-    const item = await this.selectItemWhere(table, col, val);
-    if (item === undefined) return await this.insertItem(table, col, val);
+  async selectItemAndInsertWhenNonExistent(table, column, value) {
+    const item = await this.selectItemWhere(table, column, value);
+    if (item === undefined) return await this.insertItem(table, column, value);
     return item;
   }
 
-  async selectItemsWhere(table, col, val) {
+  async selectItemsWhere(table, col, val, selection) {
+    const selectionStr = Array.isArray(selection) ? selection.join(", ") : "*";
     const { rows } = await this.#_db.query(
-      `SELECT * FROM ${table} WHERE ${col} = $1`,
+      `SELECT ${selectionStr} FROM ${table} WHERE ${col} = $1`,
       [val]
     );
     return rows;
   }
 
-  selectItemWhere = async (table, col, val) => {
-    const [item] = await this.selectItemsWhere(table, col, val);
+  async selectItemWhere(table, col, val, selection) {
+    const [item] = await this.selectItemsWhere(table, col, val, selection);
     return item;
-  };
+  }
 
   async itemExists(table, column, value) {
     const { rows } = await this.selectItemsWhere(table, column, value);
     return rows.length !== 0;
   }
 }
+
+module.exports.SqlQuerier = SqlQuerier;

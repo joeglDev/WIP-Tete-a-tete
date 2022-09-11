@@ -1,4 +1,3 @@
-const { getItemAndInsertWhenNonExistent } = require("./model-utils");
 const db = require(`${__dirname}/../db/connection.js`);
 const { SqlQuerier } = require("./utils/SqlQuerier");
 

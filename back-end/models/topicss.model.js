@@ -1,4 +1,4 @@
-const { gQuerier } = require("./model-utils");
+const { gQuerier } = require("./utils/model-utils");
 
 const db = require(`${__dirname}/../db/connection.js`);
 

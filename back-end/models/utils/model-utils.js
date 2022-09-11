@@ -1,7 +1,7 @@
-const { HttpErrors } = require("../../shared/HttpErrors");
-const { SqlQuerier } = require("./utils/SqlQuerier");
+const { HttpErrors } = require("../../../shared/HttpErrors");
+const { SqlQuerier } = require(".//SqlQuerier");
 
-const db = require(`${__dirname}/../db/connection.js`);
+const db = require(`${__dirname}/../../db/connection.js`);
 
 exports.gQuerier = new SqlQuerier(db);
 

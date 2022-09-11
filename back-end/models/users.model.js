@@ -3,17 +3,19 @@ const { rejectWhenNonExistent } = require("./model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");
 const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
+const { SqlQuerier } = require("./utils/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
-exports.selectUserByUsername = async (username) => {
-  const {
-    rows: [user],
-  } = await db.query(
-    "SELECT screen_name, user_id, bio, img_url FROM users WHERE username = $1",
-    [username]
-  );
+const gQuerier = new SqlQuerier(db);
 
+exports.selectUserByUsername = async (username) => {
+  const user = await gQuerier.selectItemWhere("users", "username", username, [
+    "screen_name",
+    "user_id",
+    "bio",
+    "img_url",
+  ]);
   user.topics = [];
   return user;
 };

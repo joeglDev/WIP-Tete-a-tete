@@ -9,18 +9,20 @@ class SqlQuerier {
     return this.#_db;
   }
 
-  async insertItems(table, columns, values) {
-    const colsStr = columns.join(columns);
+  async insertColumnItems(table, columns, values) {
+    const colsStr = columns.join(", ");
     const valsStr = values.map((val, idx) => `$${idx + 1}`).join(", ");
-    const { rows } = await this.#_db.query(
+    const {
+      rows: [inserted],
+    } = await this.#_db.query(
       `INSERT INTO ${table} (${colsStr}) VALUES (${valsStr}) RETURNING *;`,
       values
     );
-    return rows;
+    return inserted;
   }
 
   async insertItem(table, column, value) {
-    return await this.insertItems(table, [column], [value])[0];
+    return await this.insertColumnItems(table, [column], [value]);
   }
 
   async selectItemAndInsertWhenNonExistent(table, column, value) {

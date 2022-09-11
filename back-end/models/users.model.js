@@ -60,25 +60,25 @@ WHERE users_topics_join.user_id =  $1;`,
 4) Update all entries from join table with new incoming topics
 */
 
-exports.updateUserTopics = async (user_id, new_topics) => {
+exports.updateUserTopics = async (user_id, topicsFromUser) => {
   const newTopicsList = []; // [ { returns topic_id, topic_name } ]
-  const newTopicsPromises = new_topics.map((topic) => {
+  const selectTopicPromises = topicsFromUser.map((topic) => {
     return selectTopicAndInsertIfNonExistent(topic);
   });
-  const topicsInsert = await Promise.all(newTopicsPromises); // [ { returns topic_id, topic_name } ]
+  const topicsTableEntries = await Promise.all(selectTopicPromises); // [ { returns topic_id, topic_name } ]
 
   const existingJoin = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
   existingJoin.forEach((join, index) => {
-    if (topicsInsert[index] === undefined) {
+    if (topicsTableEntries[index] === undefined) {
       join.topic_id = null;
     } else {
-      join.topic_id = topicsInsert[index].topic_id;
+      join.topic_id = topicsTableEntries[index].topic_id;
     }
   });
 
   const updatedTopicsJoin = await updateUserTopics(existingJoin); //returns new join data [{id, user_id, topic_id}]
 
   if (updatedTopicsJoin.length === 10) {
-    return new_topics;
+    return topicsFromUser;
   }
 };

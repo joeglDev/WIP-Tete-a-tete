@@ -13,7 +13,7 @@ class SqlQuerier {
     const colsStr = columns.join(columns);
     const valsStr = values.map((val, idx) => `$${idx + 1}`).join(", ");
     const { rows } = await this.#_db.query(
-      "INSERT INTO ${table} (${colsStr}) VALUES (${valsStr}) RETURNING *;",
+      `INSERT INTO ${table} (${colsStr}) VALUES (${valsStr}) RETURNING *;`,
       values
     );
     return rows;

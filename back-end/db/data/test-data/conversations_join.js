@@ -9,4 +9,9 @@ module.exports = [
     conversation_id: 2,
     topic_id: 2,
   },
+  {
+    user_id: 3,
+    conversation_id: 3,
+    topic_id: 3,
+  },
 ];

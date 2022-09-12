@@ -27,7 +27,6 @@ exports.getMatchingConversations = async (req, res) => {
     const matchingConversations = await selectMatchingConversations(
       topic_names
     );
-    console.log(matchingConversations)
     res.status(200).send({ conversations: matchingConversations });
   } catch (error) {
     throw new Error(error);

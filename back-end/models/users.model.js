@@ -58,6 +58,7 @@ WHERE users_topics_join.user_id =  $1;`,
 4) Update all entries from join table with new incoming topics
 */
 
+//transactional psql in javascript
 exports.updateUserTopics = async (user_id, topicsFromUser) => {
   const dbClient = await gQuerier.db.connect();
   const querierClient = new SqlQuerier(dbClient);

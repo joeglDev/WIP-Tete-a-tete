@@ -229,6 +229,8 @@ describe("POST /user/:user_id/conversation", () => {
       title: "Chat A",
       body: "Body A",
       topics: ["Topic A"],
+      topic_id: 1,
+      user_id: 1
     };
 
     return request(app)

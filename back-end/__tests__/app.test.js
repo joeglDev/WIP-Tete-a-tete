@@ -230,7 +230,7 @@ describe("POST /user/:user_id/conversation", () => {
       body: "Body A",
       topics: ["Topic A"],
       topic_id: 1,
-      user_id: 1
+      user_id: 1,
     };
 
     return request(app)
@@ -241,5 +241,30 @@ describe("POST /user/:user_id/conversation", () => {
         expect(body.new_conversation).toEqual(expected);
       });
   });
-  //mock test util function to insert topic into topic_conversations_join
+});
+
+describe("GET / conversation", () => {
+  test("returns status 200 and an object representing a list of conversations matching an input topic", () => {
+    const body = { topic_names: ["Topic A"] };
+    const res = [
+      [
+        {
+          author_user_id: 1,
+          conversation_id: 1,
+          topic_id: 1,
+          topic_name: "Topic A",
+          title: "Chat A",
+          body: "Body A",
+          author: "user_1",
+        },
+      ],
+    ];
+    return request(app)
+      .post(Endpoints.conversationsEnd)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.conversations).toEqual(res);
+      });
+  });
 });

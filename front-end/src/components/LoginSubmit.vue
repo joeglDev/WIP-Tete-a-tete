@@ -1,4 +1,5 @@
 <template>
+<div>
   <form class="login-submit" @submit="loginSubmit">
     <label>Username:</label>
     <input type="email" required v-model="username" />
@@ -6,6 +7,8 @@
     <input type="password" required v-model="password" />
     <input class="login-submit-button" type="submit" value="Submit info" />
   </form>
+  <p>{{password}}</p>
+  </div>
 </template>
 
 <script setup>

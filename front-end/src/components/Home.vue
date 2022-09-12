@@ -2,6 +2,7 @@
 import UserBox from "./UserBox.vue"
 import Interests from "./Interests.vue";
 import AddInterests from "./AddInterests.vue"
+import ConvoBoard from "./ConvoBoard.vue"
 
 </script>
 
@@ -10,6 +11,6 @@ import AddInterests from "./AddInterests.vue"
     <UserBox/>
     <Interests />
     <AddInterests />
-    
+    <ConvoBoard />
   </div>
 </template>

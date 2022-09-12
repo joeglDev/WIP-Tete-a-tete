@@ -9,7 +9,7 @@ class SqlQuerier {
     return this.#_db;
   }
 
-  async insertColumnItems(table, columns, values) {
+  async insertColumnValues(table, columns, values) {
     const colsStr = columns.join(", ");
     const valsStr = values.map((val, idx) => `$${idx + 1}`).join(", ");
     const {
@@ -22,7 +22,7 @@ class SqlQuerier {
   }
 
   async insertItem(table, column, value) {
-    return await this.insertColumnItems(table, [column], [value]);
+    return await this.insertColumnValues(table, [column], [value]);
   }
 
   async selectItemAndInsertWhenNonExistent(table, column, value) {

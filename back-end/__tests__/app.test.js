@@ -225,12 +225,12 @@ describe("POST /user/:user_id/conversation", () => {
       },
     };
     const expected = {
-      conversation_id: 3,
+      conversation_id: 4,
       title: "Chat A",
       body: "Body A",
       topics: ["Topic A"],
       topic_id: 1,
-      user_id: 1
+      user_id: 1,
     };
 
     return request(app)
@@ -241,5 +241,77 @@ describe("POST /user/:user_id/conversation", () => {
         expect(body.new_conversation).toEqual(expected);
       });
   });
-  //mock test util function to insert topic into topic_conversations_join
+});
+
+describe("GET / conversation", () => {
+  test("returns status 200 and an object representing a list of conversations matching an input topic", () => {
+    const body = { topic_names: ["Topic A"] };
+    const res = [
+      [
+        {
+          author_user_id: 1,
+          conversation_id: 1,
+          topic_id: 1,
+          topic_name: "Topic A",
+          title: "Chat A",
+          body: "Body A",
+          author: "user_1",
+        },
+      ],
+    ];
+    return request(app)
+      .post(Endpoints.conversationsEnd)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.conversations).toEqual(res);
+      });
+  });
+
+  test("returns status 200 and an object representing a list of conversations matching many input topics", () => {
+    const body = { topic_names: ["Topic A", "Topic B"] };
+    const res = [
+      [
+        {
+          author_user_id: 1,
+          conversation_id: 1,
+          topic_id: 1,
+          topic_name: "Topic A",
+          title: "Chat A",
+          body: "Body A",
+          author: "user_1",
+        },
+      ],
+      [
+        {
+          author_user_id: 2,
+          conversation_id: 2,
+          topic_id: 2,
+          topic_name: "Topic B",
+          title: "Chat B",
+          body: "Body B",
+          author: "user_2",
+        },
+      ],
+    ];
+    return request(app)
+      .post(Endpoints.conversationsEnd)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.conversations).toEqual(res);
+      });
+  });
+
+  test("returns status 200 and a empty object representing no found conversations", () => {
+    const body = { topic_names: [] };
+    const res = [];
+    return request(app)
+      .post(Endpoints.conversationsEnd)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.conversations).toEqual(res);
+      });
+  });
 });

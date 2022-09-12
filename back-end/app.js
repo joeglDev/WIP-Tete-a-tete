@@ -8,6 +8,7 @@ const {
 } = require("./controllers/users.controller");
 const {
   postNewConversation,
+  getMatchingConversations
 } = require("./controllers/conversation-controller.js");
 const app = express();
 
@@ -26,6 +27,7 @@ app.post(
   `${Endpoints.makePostUserConversationEnd(":user_id")}`,
   postNewConversation
 );
+app.post(Endpoints.conversationsEnd, getMatchingConversations)
 
 //errors
 app.use((error, req, res, next) => {

@@ -1,12 +1,14 @@
- Tete-a-tete: A social messaging app
+Tete-a-tete: A social messaging app
 
 ## To run locally:
 
 1. Clone the main repo from github using `git clone <REPO URL>`.
 2. Navigate to the back-end folder in terminal using `cd ./back-end`.
-3. Run the following npm scripts in your terminal: 
-- `npm run setup` 
--  `npm run seed`
+3. Run the following npm scripts in your terminal:
+
+- `npm run setup`
+- `npm run seed`
+
 3. Run the following npm scripts in your terminal:
 
 - `npm run setup`
@@ -18,12 +20,13 @@
 6. Run the following npm scripts in your terminal:
 
 - `npm run dev`
+
 7. Click the link in terminal to run a local instance of the web app.
 
 ## Authors/ Github
 
 - Todd Norton / ToddDevRepo
-- Joe Gilbert / joeglDev 
+- Joe Gilbert / joeglDev
 - Joe Gilbert / joeglDev
 - Solveiga Galatiltyte / solveigag
 - Rob Anderson
@@ -145,4 +148,32 @@
     }
 ```
 
+### GET /convesations
 
+- Express handles this as a post request not a get request as to allow query params to be sent on a request body. Data could potentially be too long to send as a url query string.
+
+- Expected Request Body:
+
+```
+{
+    topic_names: [String, String, etc]
+    }
+```
+
+- Expected Response Body:
+
+```
+[
+      [
+        {
+          author_user_id: Number,
+          conversation_id: Number,
+          topic_id: Number,
+          topic_name: String,
+          title: String,
+          body: String,
+          author: String,
+        },
+      ],
+    ]
+```

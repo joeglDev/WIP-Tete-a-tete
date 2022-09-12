@@ -22,6 +22,7 @@ exports.getUserTopics = async (req, res, next) => {
     const userTopics = rawUserTopics.map((topic) => {
       return topic.topic_name;
     });
+
     res.status(200).send({ user_topics: userTopics });
   } catch (error) {
     next(error);

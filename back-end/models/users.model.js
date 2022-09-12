@@ -34,7 +34,7 @@ exports.updateUserProfile = async (user_id, userProfile) => {
 
 exports.selectUserTopics = async (user_id) => {
   const { rows } = await db.query(
-    `SELECT topic_name FROM topics 
+    `SELECT topics.topic_name FROM topics 
 LEFT JOIN users_topics_join ON
 topics.topic_id = users_topics_join.topic_id
 WHERE users_topics_join.user_id =  $1;`,

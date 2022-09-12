@@ -1,27 +1,26 @@
-const { selectItemsWhere } = require("./model-utils");
-const db = require(`${__dirname}/../db/connection.js`);
-
-exports.selectUserTopics = async (userId) => {
-  return await selectItemsWhere("users_topics_join", "user_id", userId);
+exports.selectUserTopics = async (querier, userId) => {
+  return await querier.selectItemsWhere("users_topics_join", "user_id", userId);
 };
 
-exports.makeUpdateUserTopicProm = (topicId, joinId) => {
-  return db.query(
+exports.makeUpdateUserTopicProm = (querier, topicId, joinId) => {
+  return querier.db.query(
     `UPDATE users_topics_join  SET topic_id = $1 WHERE id = $2 RETURNING *;`,
     [topicId, joinId]
   );
 };
 
-exports.updateUserTopics =  async (topics) => {
+exports.updateUserTopics = async (querier, topics) => {
   const promises = [];
   topics.forEach((topic) => {
-    promises.push(this.makeUpdateUserTopicProm(topic.topic_id, topic.id))
+    promises.push(
+      this.makeUpdateUserTopicProm(querier, topic.topic_id, topic.id)
+    );
   });
   const allPromises = await Promise.all(promises);
-  const updatedTopicValues = allPromises.map(({rows}) => {
-   return rows[0]
+  const updatedTopicValues = allPromises.map(({ rows }) => {
+    return rows[0];
   });
-  return updatedTopicValues
+  return updatedTopicValues;
 };
 
 //could remove this key word if export all at bottom - maybe?

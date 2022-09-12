@@ -1,19 +1,19 @@
 const { HttpErrors } = require("../../shared/HttpErrors");
-const { rejectWhenNonExistent } = require("./model-utils.js");
+const { rejectWhenNonExistent, gQuerier } = require("./utils/model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");
 const { selectTopicAndInsertIfNonExistent } = require("./topicss.model");
+const { SqlQuerier } = require("./utils/SqlQuerier");
 
 const db = require(`${__dirname}/../db/connection.js`);
 
 exports.selectUserByUsername = async (username) => {
-  const {
-    rows: [user],
-  } = await db.query(
-    "SELECT screen_name, user_id, bio, img_url FROM users WHERE username = $1",
-    [username]
-  );
-
+  const user = await gQuerier.selectItemWhere("users", "username", username, [
+    "screen_name",
+    "user_id",
+    "bio",
+    "img_url",
+  ]);
   user.topics = [];
   return user;
 };
@@ -58,25 +58,38 @@ WHERE users_topics_join.user_id =  $1;`,
 4) Update all entries from join table with new incoming topics
 */
 
-exports.updateUserTopics = async (user_id, new_topics) => {
-  const newTopicsList = []; // [ { returns topic_id, topic_name } ]
-  const newTopicsPromises = new_topics.map((topic) => {
-    return selectTopicAndInsertIfNonExistent(topic);
-  });
-  const topicsInsert = await Promise.all(newTopicsPromises); // [ { returns topic_id, topic_name } ]
+//transactional psql in javascript
+exports.updateUserTopics = async (user_id, topicsFromUser) => {
+  const dbClient = await gQuerier.db.connect();
+  const querierClient = new SqlQuerier(dbClient);
+  try {
+    await dbClient.query("BEGIN");
+    const selectTopicPromises = topicsFromUser.map((topic) => {
+      return selectTopicAndInsertIfNonExistent(querierClient, topic);
+    });
+    const topicsTableEntries = await Promise.all(selectTopicPromises); // [ { returns topic_id, topic_name } ]
 
-  const existingJoin = await selectUserTopics(user_id); // returns join [{id, user_id, topic_id}]
-  existingJoin.forEach((join, index) => {
-    if (topicsInsert[index] === undefined) {
-      join.topic_id = null;
-    } else {
-      join.topic_id = topicsInsert[index].topic_id;
+    const existingJoinState = await selectUserTopics(querierClient, user_id); // returns join [{id, user_id, topic_id}]
+    existingJoinState.forEach((join, index) => {
+      if (topicsTableEntries[index] === undefined) {
+        join.topic_id = null;
+      } else {
+        join.topic_id = topicsTableEntries[index].topic_id;
+      }
+    });
+
+    const updatedTopicsJoin = await updateUserTopics(
+      querierClient,
+      existingJoinState
+    ); //returns new join data [{id, user_id, topic_id}]
+    await dbClient.query("COMMIT");
+    if (updatedTopicsJoin.length === 10) {
+      return topicsFromUser;
     }
-  });
-
-  const updatedTopicsJoin = await updateUserTopics(existingJoin); //returns new join data [{id, user_id, topic_id}]
-
-  if (updatedTopicsJoin.length === 10) {
-    return new_topics;
+  } catch (err) {
+    await dbClient.query("ROLLBACK");
+    throw err;
+  } finally {
+    dbClient.release();
   }
 };

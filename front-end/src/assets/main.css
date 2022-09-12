@@ -137,7 +137,7 @@ h2 {
 
 .interests-container {
   margin: auto;
-  margin-top: 150px;
+  margin-top: 350px;
   display: grid;
   grid-template-areas:
     "headline headline headline headline"

@@ -4,15 +4,14 @@
     <input type="email" required v-model="username" />
     <label>Password:</label>
     <input type="password" required v-model="password" />
-    <router-link to="/home">
-      <input class="login-submit-button" type="submit" value="Submit info" />
-    </router-link>
+    <input class="login-submit-button" type="submit" value="Submit info" />
   </form>
 </template>
 
 <script setup>
 import axios from "axios";
 import { ref, reactive, defineProps } from "vue";
+import router from "../router";
 import { userStore } from "../stores/user";
 import fetchTopics from "../utils/fetchTopics";
 
@@ -22,7 +21,7 @@ const props = defineProps({ username: String, password: String });
 
 const loginSubmit = (event) => {
   event.preventDefault();
-  axios
+   axios
     .post(`http://localhost:9090/login`, {
       username: props.username,
       password: props.password,
@@ -31,6 +30,7 @@ const loginSubmit = (event) => {
       if (response.status === 200) {
         profile.setProfile(response.data.user);
         fetchTopics(profile.user_id);
+        router.push('/home')
       }
     })
     .catch((error) => {

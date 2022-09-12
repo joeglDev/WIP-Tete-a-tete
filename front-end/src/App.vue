@@ -20,6 +20,6 @@ import Footer from "./components/Footer.vue";
     <Interests />
     <AddInterests />
     <Login /> -->
-    <!-- <Footer /> -->
+    <Footer />
   </header>
 </template>

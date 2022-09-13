@@ -53,7 +53,9 @@ exports.selectMatchingConversations = async (topicNames) => {
       return selectTopicByName(clientQuerier, topicName);
     });
 
-    const topics = await Promise.all(topicsPromises);
+    const topics = (await Promise.all(topicsPromises)).filter((topic) => {
+      return topic;
+    });
 
     //matching ids in topics_conversations_join
     const joinPromises = topics.map(({ topic_id }) => {
@@ -87,11 +89,11 @@ exports.selectMatchingConversations = async (topicNames) => {
     const conversations = await Promise.all(conversationPromises);
 
     clientQuerier.db.query("COMMIT");
-   
+
     const returnedConversations = conversations.map((conversation) => {
-      return conversation.rows
+      return conversation.rows;
     });
-    return returnedConversations
+    return returnedConversations;
   } catch (error) {
     clientQuerier.db.query("ROLLBACK");
   } finally {

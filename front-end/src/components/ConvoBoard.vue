@@ -46,18 +46,6 @@ const profile = userStore();
 const conversation = convoStore()
 const interests = interestsStore()
 
-// onMounted(()=>{
-//   getConvos()
-// })
-// const getConvos = () => {
-//   console.log(interests.values, "current interests state pre axios")
-//   axios
-//   .post("http://localhost:9090/conversations", { topic_names: interests.values })
-//   .then((response) => {
-//     console.log(response)
-//   })
-// }
-
 
 const onConvoSubmit = (event) => {
   event.preventDefault() 
@@ -73,6 +61,7 @@ const onConvoSubmit = (event) => {
     axios
     .post(`http://localhost:9090/users/${profile.user_id}/conversation`, newConversation)
     .then((response) => {
+      console.log(response)
       conversation.setConversations(response.data.new_conversation)
    
     })

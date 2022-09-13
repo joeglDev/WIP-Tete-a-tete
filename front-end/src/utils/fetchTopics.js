@@ -22,7 +22,7 @@ const getConvos = (interestsArray) => {
   console.log(interestsArray.values[0], "state pre axios");
   axios
     .post("http://localhost:9090/conversations", {
-      topic_names: [interestsArray.values[0], interestsArray.values[1]],
+      topic_names: ["Asian Baking"],
     })
     .then((response) => {
       console.log(response);

@@ -9,13 +9,13 @@
       <input placeholder="insert interest 1" id="element1" v-model="topic0" />
        <button v-on:click="interestsSubmit(0)" class="add-button">
          <img v-if="interestsArray.values[0]"
-          class="remove-interest-button"
-          src="../assets/add-interest-icon.svg"
+         class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
         <img v-else
-          class="add-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
       </button>
@@ -43,13 +43,13 @@
       <input placeholder="insert interest 3" v-model="topic2"/>
       <button v-on:click="interestsSubmit(2)" class="add-button">
         <img v-if="interestsArray.values[2]"
-          class="remove-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
         <img v-else
-          class="add-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
       </button>
@@ -77,13 +77,13 @@
       <input placeholder="insert interest 5" v-model="topic4"/>
       <button v-on:click="interestsSubmit(4)" class="add-button">
         <img v-if="interestsArray.values[4]"
-          class="remove-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
         <img v-else
-          class="add-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
       </button>
@@ -111,13 +111,13 @@
       <input placeholder="insert interest 7" v-model="topic6"/>
       <button v-on:click="interestsSubmit(6)" class="add-button">
         <img v-if="interestsArray.values[6]"
-          class="remove-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
         <img v-else
-          class="add-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
       </button>
@@ -145,13 +145,13 @@
       <input placeholder="insert interest 9" v-model="topic8"/>
       <button v-on:click="interestsSubmit(8)" class="add-button">
         <img v-if="interestsArray.values[8]"
-          class="remove-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
         <img v-else
-          class="add-interest-button"
-          src="../assets/add-interest-icon.svg"
+        class="add-interest-button-light"
+          src="../assets/add-interest-button-light.svg"
           alt=""
         />
       </button>

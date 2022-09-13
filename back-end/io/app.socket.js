@@ -9,12 +9,16 @@ const socketIO = require("socket.io")(http, {
   },
 });
 
-console.log(socketIO);
 
 socketIO.on("connection", (socketIO) => {
-  console.log("User connected.");
+  
+
+  //client connected
+  console.log("Client connected.");
+  socketIO.emit("connected", "Client connected")
+
   socketIO.on("disconnect", () => {
-    console.log("🔥: A user disconnected");
+    console.log("A user disconnected");
   });
 
   socketIO.on("join", (joinData) => {
@@ -22,3 +26,6 @@ socketIO.on("connection", (socketIO) => {
     socketIO.join(joinData.roomName);
   });
 });
+
+
+module.exports = socketIO;

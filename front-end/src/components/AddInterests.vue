@@ -220,7 +220,7 @@ const interestsSubmit = (index) => {
     .then((response) => {
       if (response.status === 200) {
         interestsArray.setInterestsArray(response.data.updated_topics)     
-        console.log(interestsArray.values) 
+        console.log(interestsArray.values, "interests state directly ") 
         
       }
     })

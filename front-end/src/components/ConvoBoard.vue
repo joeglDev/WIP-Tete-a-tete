@@ -1,5 +1,6 @@
 <template>
-<div class="convo-creater">
+<!-- convo container class applies so that list appears under form - needs sorting -->
+<div class="convo-creater convo-container">
       <div><img class="chat-icon" src="../assets/chat-icon.svg"></div>
       <div><img class="light-logo" src="../assets/tete-a-tete-logo-light.svg"></div>
     <form class="login-submit" @submit="onConvoSubmit">
@@ -16,20 +17,24 @@
       <label>Topic:</label>
       <select name="topics" v-model="selected" >
         <option v-for="topic in interests.values" :key="topic">{{topic}}</option>
-      </select>
-     
+      </select>     
     </div>
     <input class="submit" type="submit" value="Post!" />
   </form>    
     <ul>
-    <conversation-ad
-      v-for="convo in conversation.values"
+    <!-- <conversation-ad
+      v-for="convo in conversations.values"
       :key="convo.id"
-      :title="convo.title"
+      :title="title"
       @remove="conversation.values.splice(index, 1)"
-    ></conversation-ad>
+    ></conversation-ad> -->
+    <li v-for="convo in conversations.values"
+    :key="convo.conversation_id">
+    <p>Title: {{convo.title}}</p> 
+    <p>Description: {{convo.body}}</p>
+    <p>Topic: {{convo.topic_name}}</p>
+    </li>
   </ul>
-  <p>{{conversation.values[0]}}</p>
   </div>
 </template>
 
@@ -43,9 +48,10 @@ import {interestsStore} from "../stores/interestsStore"
 import { helperNameMap } from "@vue/compiler-core";
 
 const profile = userStore();
-const conversation = convoStore()
+const conversations = convoStore()
 const interests = interestsStore()
 
+console.log(conversations.values, "In CONVOBoard")
 
 const onConvoSubmit = (event) => {
   event.preventDefault() 
@@ -62,7 +68,7 @@ const onConvoSubmit = (event) => {
     .post(`http://localhost:9090/users/${profile.user_id}/conversation`, newConversation)
     .then((response) => {
       console.log(response)
-      conversation.setConversations(response.data.new_conversation)
+      conversations.setConversations(response.data.new_conversation)
    
     })
     .catch((error) => {
@@ -71,15 +77,4 @@ const onConvoSubmit = (event) => {
 
 
 }
-
-
-
 </script>
-
-
-
-
-type smth in -- choose topic from state
-submit
-then generate box
-

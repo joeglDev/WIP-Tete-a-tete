@@ -15,7 +15,7 @@ import axios from "axios";
 import { ref, reactive, defineProps } from "vue";
 import router from "../router";
 import { userStore } from "../stores/user";
-import fetchTopics from "../utils/fetchTopics";
+import fetchTopics from "../utils/fetchUserData";
 
 const profile = userStore();
 

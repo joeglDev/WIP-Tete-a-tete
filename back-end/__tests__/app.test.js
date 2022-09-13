@@ -374,7 +374,8 @@ describe("GET / conversation", () => {
       .expect(201)
       .then(({ body }) => {
         expect(body.new_conversation).toEqual(expected);
-      }).then(() => {
+      })
+      .then(() => {
         const body = { topic_names: ["Topic D"] };
         const res = [
           [
@@ -389,49 +390,46 @@ describe("GET / conversation", () => {
             },
           ],
         ];
-         
-       
+
         return request(app)
           .post(Endpoints.conversationsEnd)
           .send(body)
           .expect(200)
           .then(({ body }) => {
-            console.log(body.conversations)
+            console.log(body.conversations);
             expect(body.conversations).toEqual(res);
           });
-      })
-      
-});
+      });
+  });
 
-
-test("GET conversations reflects recent updates for a topic with more than one conversation", () => {
-  //posts a new conversation ad
-  const newConversation = {
-    new_conversation: {
+  test.only("GET conversations reflects recent updates for a topic with more than one conversation", () => {
+    //posts a new conversation ad
+    const newConversation = {
+      new_conversation: {
+        title: "Chat A",
+        body: "Body A",
+        topics: ["Topic A"],
+      },
+    };
+    const expected = {
+      conversation_id: 4,
       title: "Chat A",
       body: "Body A",
       topics: ["Topic A"],
-    },
-  };
-  const expected = {
-    conversation_id: 4,
-    title: "Chat A",
-    body: "Body A",
-    topics: ["Topic A"],
-    topic_id: 1,
-    user_id: 1,
-  };
+      topic_id: 1,
+      user_id: 1,
+    };
 
-  return request(app)
-    .post(Endpoints.makePostUserConversationEnd(1))
-    .send(newConversation)
-    .expect(201)
-    .then(({ body }) => {
-      expect(body.new_conversation).toEqual(expected);
-    }).then(() => {
-      const body = { topic_names: ["Topic A"] };
-      const res = [
-        [
+    return request(app)
+      .post(Endpoints.makePostUserConversationEnd(1))
+      .send(newConversation)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.new_conversation).toEqual(expected);
+      })
+      .then(() => {
+        const body = { topic_names: ["Topic A"] };
+        const res = [
           {
             author_user_id: 1,
             conversation_id: 1,
@@ -441,8 +439,6 @@ test("GET conversations reflects recent updates for a topic with more than one c
             body: "Body A",
             author: "user_1",
           },
-        ],
-        [
           {
             author_user_id: 1,
             conversation_id: 4,
@@ -452,21 +448,15 @@ test("GET conversations reflects recent updates for a topic with more than one c
             body: "Body A",
             author: "user_1",
           },
-        ],
-      ];
-       
-     
-      return request(app)
-        .post(Endpoints.conversationsEnd)
-        .send(body)
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.conversations).toEqual(res);
-        });
-    })
+        ];
 
-    
-    
-});
-
+        return request(app)
+          .post(Endpoints.conversationsEnd)
+          .send(body)
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.conversations).toEqual(res);
+          });
+      });
+  });
 });

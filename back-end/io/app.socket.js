@@ -26,11 +26,7 @@ io.on('connection', (socket) => {
 
 });
 
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'Hello world',
-  });
-});
+
 
 http.listen(Port.mainPort, () => {
   console.log(`Server listening on ${Port.mainPort}`);

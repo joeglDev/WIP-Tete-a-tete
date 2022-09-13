@@ -6,10 +6,10 @@
     <div class="item-interests interest-1">
       <p>{{ interestsArray.values[0] }}</p>
       <p v-if="!interestsArray.values[0]">&nbsp;</p>
-      <input placeholder="insert interest 1" id="element1" v-model="topic0" />
+      <input placeholder="insert interest 1" v-model="topic0"/>
        <button v-on:click="interestsSubmit(0)" class="add-button">
          <img v-if="interestsArray.values[0]"
-         class="add-interest-button-light"
+         class="remove-interest-button-light"
           src="../assets/add-interest-button-light.svg"
           alt=""
         />
@@ -43,7 +43,7 @@
       <input placeholder="insert interest 3" v-model="topic2"/>
       <button v-on:click="interestsSubmit(2)" class="add-button">
         <img v-if="interestsArray.values[2]"
-        class="add-interest-button-light"
+        class="remove-interest-button-light"
           src="../assets/add-interest-button-light.svg"
           alt=""
         />
@@ -77,7 +77,7 @@
       <input placeholder="insert interest 5" v-model="topic4"/>
       <button v-on:click="interestsSubmit(4)" class="add-button">
         <img v-if="interestsArray.values[4]"
-        class="add-interest-button-light"
+        class="remove-interest-button-light"
           src="../assets/add-interest-button-light.svg"
           alt=""
         />
@@ -111,7 +111,7 @@
       <input placeholder="insert interest 7" v-model="topic6"/>
       <button v-on:click="interestsSubmit(6)" class="add-button">
         <img v-if="interestsArray.values[6]"
-        class="add-interest-button-light"
+        class="remove-interest-button-light"
           src="../assets/add-interest-button-light.svg"
           alt=""
         />
@@ -145,7 +145,7 @@
       <input placeholder="insert interest 9" v-model="topic8"/>
       <button v-on:click="interestsSubmit(8)" class="add-button">
         <img v-if="interestsArray.values[8]"
-        class="add-interest-button-light"
+        class="remove-interest-button-light"
           src="../assets/add-interest-button-light.svg"
           alt=""
         />

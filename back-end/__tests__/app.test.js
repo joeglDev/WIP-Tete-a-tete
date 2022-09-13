@@ -314,4 +314,39 @@ describe("GET / conversation", () => {
         expect(body.conversations).toEqual(res);
       });
   });
+
+  test.only("returns status 200 and appropiate conversation objects for a list of valid and invalid topics", () => {
+    const body = { topic_names: ["Topic A", "Topic Invalid" , "Topic B"] };
+    const res = [
+      [
+        {
+          author_user_id: 1,
+          conversation_id: 1,
+          topic_id: 1,
+          topic_name: "Topic A",
+          title: "Chat A",
+          body: "Body A",
+          author: "user_1",
+        },
+      ],
+      [
+        {
+          author_user_id: 2,
+          conversation_id: 2,
+          topic_id: 2,
+          topic_name: "Topic B",
+          title: "Chat B",
+          body: "Body B",
+          author: "user_2",
+        },
+      ],
+    ];
+    return request(app)
+      .post(Endpoints.conversationsEnd)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.conversations).toEqual(res);
+      });
+  });
 });

@@ -1,5 +1,43 @@
 const app = require(`${__dirname}/../app.js`);
-//const cors = require(`${__dirname}/../app.js`);
+const {Port} = require("../../shared/Port");
+console.log(Port.mainPort)
+
+
+
+const http = require('http').Server(app);
+const cors = require('cors');
+const io = require('socket.io')(http, {
+  cors: {
+      origin: "*"
+  }
+});
+
+app.use(cors());
+
+io.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  socket.emit("hello", "world")
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+
+ 
+    
+
+});
+
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Hello world',
+  });
+});
+
+http.listen(Port.mainPort, () => {
+  console.log(`Server listening on ${Port.mainPort}`);
+});
+
+
+/*
 const cors = require("cors");
 
 const http = require("http").Server(app);
@@ -27,5 +65,7 @@ socketIO.on("connection", (socketIO) => {
   });
 });
 
+*/
 
-module.exports = socketIO;
+
+

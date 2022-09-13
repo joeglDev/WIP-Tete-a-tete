@@ -56,7 +56,6 @@ exports.selectMatchingConversations = async (topicNames) => {
       topics,
       clientQuerier
     );
-    console.log(conversationJoins);
 
     //get matching conversations
     const conversations = await _convertJoinsForEachTopicToConversations(
@@ -64,7 +63,6 @@ exports.selectMatchingConversations = async (topicNames) => {
       clientQuerier
     );
     clientQuerier.db.query("COMMIT");
-    console.log("conversations", conversations);
     return conversations;
   } catch (error) {
     clientQuerier.db.query("ROLLBACK");

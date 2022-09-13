@@ -43,6 +43,7 @@ exports.insertNewUserConversation = async (user_id, new_conversation) => {
 };
 
 exports.selectMatchingConversations = async (topicNames) => {
+
   const client = await gQuerier.db.connect();
   const clientQuerier = new SqlQuerier(client);
 
@@ -56,6 +57,7 @@ exports.selectMatchingConversations = async (topicNames) => {
     const topics = (await Promise.all(topicsPromises)).filter((topic) => {
       return topic;
     });
+    
 
     //matching ids in topics_conversations_join
     const joinPromises = topics.map(({ topic_id }) => {
@@ -66,6 +68,7 @@ exports.selectMatchingConversations = async (topicNames) => {
       );
     });
     const conversationJoins = await Promise.all(joinPromises);
+    console.log(conversationJoins)
 
     //get matching conversations
     const conversationPromises = conversationJoins.map(
@@ -87,6 +90,7 @@ exports.selectMatchingConversations = async (topicNames) => {
     );
 
     const conversations = await Promise.all(conversationPromises);
+ 
 
     clientQuerier.db.query("COMMIT");
 

@@ -16,24 +16,36 @@
       </div>
     <div class="topic">
       <label>Topic:</label>
-      <select name="topics" v-model="selected">
-        <option >Asian Baking</option>
-        <option >Dog Walking</option>
-        <option >Coding</option>
+      <select name="topics" v-model="selected" >
+        <option v-for="topic in interests.values" :key="topic">{{topic}}</option>
       </select>
      
     </div>
     <input class="submit" type="submit" value="Post!" />
-  </form>
-    
-  <div>
- <!-- chatboard -->
-  </div>
+  </form>    
+    <ul>
+    <conversation-ad
+      v-for="convo in conversation.values"
+      :key="convo.id"
+      :title="convo.title"
+      @remove="conversation.values.splice(index, 1)"
+    ></conversation-ad>
+  </ul>
   </div>
 </template>
 
 <script setup> 
 import axios from "axios";
+import { userStore } from "../stores/user";
+import {convoStore} from "../stores/convoStore"
+import ConversationAd from "../components/ConversationAd.vue"
+import {interestsStore} from "../stores/interestsStore"
+
+const profile = userStore();
+const conversation = convoStore()
+const interests = interestsStore()
+
+
 
 const onConvoSubmit = (event) => {
   event.preventDefault() 
@@ -47,11 +59,10 @@ const onConvoSubmit = (event) => {
     };
 
     axios
-    .post(`http://localhost:9090/users/1/conversation`, newConversation)
+    .post(`http://localhost:9090/users/${profile.user_id}/conversation`, newConversation)
     .then((response) => {
+      conversation.setConversations(response.data.new_conversation)
    
-        console.log(response)
-    
     })
     .catch((error) => {
      console.log(error)

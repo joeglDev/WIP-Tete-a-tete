@@ -7,7 +7,6 @@
     <input type="password" required v-model="password" />
     <input class="login-submit-button" type="submit" value="Submit info" />
   </form>
-  <p>{{password}}</p>
   </div>
 </template>
 

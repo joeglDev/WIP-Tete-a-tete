@@ -394,6 +394,11 @@ h4 {
   width: 25px;
 }
 
+.remove-interest-button {
+  width: 25px;
+  transform: rotate(45deg)
+}
+
 .add-button {
   text-decoration: none;
   border: none;

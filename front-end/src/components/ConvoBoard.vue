@@ -23,13 +23,13 @@
   </form>    
     <ul>
     <conversation-ad
-      v-for="convo in conversation.values"
+      v-for="convo in conversations.values"
       :key="convo.id"
       :title="convo.title"
-      @remove="conversation.values.splice(index, 1)"
+      @remove="conversations.values.splice(index, 1)"
     ></conversation-ad>
   </ul>
-  <p>{{conversation.values[0]}}</p>
+  <p>{{conversations.values[0]}}</p>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ import {interestsStore} from "../stores/interestsStore"
 import { helperNameMap } from "@vue/compiler-core";
 
 const profile = userStore();
-const conversation = convoStore()
+const conversations = convoStore()
 const interests = interestsStore()
 
 
@@ -61,8 +61,7 @@ const onConvoSubmit = (event) => {
     axios
     .post(`http://localhost:9090/users/${profile.user_id}/conversation`, newConversation)
     .then((response) => {
-      console.log(response)
-      conversation.setConversations(response.data.new_conversation)
+      conversations.setConversations(response.data.new_conversation)
    
     })
     .catch((error) => {

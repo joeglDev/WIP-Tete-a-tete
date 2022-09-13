@@ -1,22 +1,17 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
-export const convoStore = defineStore("conversation", {
-    
-    state: () => {
-        return {
-            values: []
-        };
+export const convoStore = defineStore("conversations", {
+  state: () => {
+    return {
+      values: [],
+    };
+  },
+
+  actions: {
+    setConversations(conversations) {
+      this.values = conversations;
     },
-
-    actions : {
-        setConversations(conversation) {
-            this.values.push(conversation)
-        },
-        removeConversation(index) {
-            
-        }
-    }
-})
-
-
+    removeConversation(index) {},
+  },
+});

@@ -8,6 +8,7 @@
     "seed": "node ./db/seeds/run-seed.js",
     "test": "NODE_ENV=test node ./db/seeds/run-seed.js && jest",
     "test-app": "npm test app.test.js",
+    "test-io": "npm test io.test.js",
     "start": "node listen.js"
   },
   "keywords": [],

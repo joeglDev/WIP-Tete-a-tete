@@ -10,7 +10,26 @@
         placeholder="Enter Email"
         name="email"
         required
+        v-model="email"
       />
     </div>
+    <button @click="functionCaller">submit</button>
   </div>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        email: "",
+      }
+    }, methods: {
+      functionCaller() {
+       this.resetInput()
+      },
+      resetInput() {
+        this.email = ""
+      }
+    }
+  }
+</script>

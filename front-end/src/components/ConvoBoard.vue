@@ -1,5 +1,3 @@
-
-
 <template>
 <div class="convo-creater">
       <div><img class="chat-icon" src="../assets/chat-icon.svg"></div>
@@ -31,20 +29,22 @@
       @remove="conversation.values.splice(index, 1)"
     ></conversation-ad>
   </ul>
+  <p>{{conversation.values[0]}}</p>
   </div>
 </template>
 
 <script setup> 
+import {ref, onMounted} from "vue"
 import axios from "axios";
 import { userStore } from "../stores/user";
 import {convoStore} from "../stores/convoStore"
 import ConversationAd from "../components/ConversationAd.vue"
 import {interestsStore} from "../stores/interestsStore"
+import { helperNameMap } from "@vue/compiler-core";
 
 const profile = userStore();
 const conversation = convoStore()
 const interests = interestsStore()
-
 
 
 const onConvoSubmit = (event) => {
@@ -61,6 +61,7 @@ const onConvoSubmit = (event) => {
     axios
     .post(`http://localhost:9090/users/${profile.user_id}/conversation`, newConversation)
     .then((response) => {
+      console.log(response)
       conversation.setConversations(response.data.new_conversation)
    
     })
@@ -70,6 +71,8 @@ const onConvoSubmit = (event) => {
 
 
 }
+
+
 
 </script>
 

@@ -350,7 +350,7 @@ describe("GET / conversation", () => {
       });
   });
 
-  test.only("GET conversations reflects recent updates from previous post conversations", () => {
+  test("GET conversations reflects recent updates from previous post conversations", () => {
     //posts a new conversation ad
     const newConversation = {
       new_conversation: {
@@ -401,6 +401,72 @@ describe("GET / conversation", () => {
           });
       })
       
+});
+
+
+test("GET conversations reflects recent updates for a topic with more than one conversation", () => {
+  //posts a new conversation ad
+  const newConversation = {
+    new_conversation: {
+      title: "Chat A",
+      body: "Body A",
+      topics: ["Topic A"],
+    },
+  };
+  const expected = {
+    conversation_id: 4,
+    title: "Chat A",
+    body: "Body A",
+    topics: ["Topic A"],
+    topic_id: 1,
+    user_id: 1,
+  };
+
+  return request(app)
+    .post(Endpoints.makePostUserConversationEnd(1))
+    .send(newConversation)
+    .expect(201)
+    .then(({ body }) => {
+      expect(body.new_conversation).toEqual(expected);
+    }).then(() => {
+      const body = { topic_names: ["Topic A"] };
+      const res = [
+        [
+          {
+            author_user_id: 1,
+            conversation_id: 1,
+            topic_id: 1,
+            topic_name: "Topic A",
+            title: "Chat A",
+            body: "Body A",
+            author: "user_1",
+          },
+        ],
+        [
+          {
+            author_user_id: 1,
+            conversation_id: 4,
+            topic_id: 1,
+            topic_name: "Topic A",
+            title: "Chat A",
+            body: "Body A",
+            author: "user_1",
+          },
+        ],
+      ];
+       
+     
+      return request(app)
+        .post(Endpoints.conversationsEnd)
+        .send(body)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.conversations).toEqual(res);
+        });
+    })
+
+    
+    
 });
 
 });

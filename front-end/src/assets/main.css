@@ -51,6 +51,7 @@ h2 {
 .item {
   background-color: #eae4d7;
   outline: 2px solid #231e21;
+  outline-width: medium;
   justify-content: center;
   align-content: center;
 }
@@ -152,6 +153,7 @@ h2 {
 .item-interests {
   background-color: #eae4d7;
   outline: 2px solid #231e21;
+  outline-width: medium;
   justify-content: center;
   align-content: center;
   text-align: center;
@@ -296,6 +298,7 @@ textarea {
 
 .user-box {
   outline: #231e21 solid 2px;
+  outline-width: medium;
   width: 150px;
   height: 200px;
   top: 50px;
@@ -317,6 +320,7 @@ textarea {
 .user-image {
   grid-row: 2/4;
   outline: #231e21 solid 2px;
+  outline-width: medium;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -486,4 +490,13 @@ h4 {
 
 .submit {
   grid-area: submit;
+}
+
+.trending-link {
+  text-decoration: none;
+  color: #eae4d7;
+}
+
+a {
+  text-decoration: none;
 }

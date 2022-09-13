@@ -15,3 +15,4 @@ const fetchTopics = (id) => {
 };
 
 export default fetchTopics;
+

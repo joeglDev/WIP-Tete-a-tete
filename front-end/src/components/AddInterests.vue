@@ -7,8 +7,13 @@
       <p>{{ interestsArray.values[0] }}</p>
       <p v-if="!interestsArray.values[0]">&nbsp;</p>
       <input placeholder="insert interest 1" id="element1" v-model="topic0" />
-      <button v-on:click="interestsSubmit(0)" class="add-button">
-        <img
+       <button v-on:click="interestsSubmit(0)" class="add-button">
+         <img v-if="interestsArray.values[0]"
+          class="remove-interest-button"
+          src="../assets/add-interest-icon.svg"
+          alt=""
+        />
+        <img v-else
           class="add-interest-button"
           src="../assets/add-interest-icon.svg"
           alt=""
@@ -20,7 +25,12 @@
       <p v-if="!interestsArray.values[1]">&nbsp;</p>
       <input placeholder="insert interest 2" v-model="topic1"/>
       <button v-on:click="interestsSubmit(1)" class="add-button">
-        <img
+        <img v-if="interestsArray.values[1]"
+          class="remove-interest-button"
+          src="../assets/add-interest-icon.svg"
+          alt=""
+        />
+        <img v-else
           class="add-interest-button"
           src="../assets/add-interest-icon.svg"
           alt=""
@@ -141,17 +151,12 @@ const interestsSubmit = (index) => {
 
   let copyinterests = interestsArray.values;
   copyinterests[index] = eval(`props.topic${index}`)
-  //let prop = eval(`props.topic${index}`)
+  
   
  
   interestsArray.setInterestsArray(copyinterests)
-  // console.log(interestsArray.values, "state")
-  const noNullsTopics = interestsArray.values.filter(topic => topic)
-  // console.log(noNullsTopics, "no nulls")
  
-//  (".add-button").on("submit", function() {
-//     reset()
-//    })
+  const noNullsTopics = interestsArray.values.filter(topic => topic)
  
  
 

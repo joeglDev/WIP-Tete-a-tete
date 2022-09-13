@@ -394,6 +394,11 @@ h4 {
   width: 25px;
 }
 
+.remove-interest-button {
+  width: 25px;
+  transform: rotate(45deg)
+}
+
 .add-button {
   text-decoration: none;
   border: none;
@@ -445,4 +450,40 @@ h4 {
 .copyright-text {
   position: absolute;
   right: 100px;
+}
+
+.convo-creater {
+  margin: auto;
+  margin-top: 150px;
+  display: grid;
+  grid-template-areas:
+    "chat-icon logo logo . . ."
+    "question question question question question question"
+    "title title title title title title"
+    "description description description description description description"
+    "topic topic topic topic submit submit";
+  grid-template-rows: 1fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  height: 400px;
+  width: 1030px;
+}
+
+.question {
+  grid-area: question;
+}
+
+.title {
+  grid-area: title;
+}
+
+.description {
+  grid-area: description;
+}
+
+.topic {
+  grid-area: topic;
+}
+
+.submit {
+  grid-area: submit;
 }

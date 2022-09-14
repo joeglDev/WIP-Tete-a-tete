@@ -1,5 +1,5 @@
-
 # Front-end/App.vue
+
 ```
 <script setup>
 import router from "./router";
@@ -34,14 +34,16 @@ socket.on("onRoomJoin", (joinRoomData) => {
   console.log(`${joinRoomData.joiner_screen_name} has joined room ${joinRoomData.room_name}.`)
 });
 
-//join room
-socket.emit("createRoom", joinRoomData);
-socket.emit("createRoom", joinRoomData2);
-
 //listen for room leave event
 socket.on("onRoomLeave", (leaveRoomData) => {
   console.log(`${leaveRoomData.joiner_screen_name} has joined room ${leaveRoomData.room_name}.`)
 });
+
+
+
+//join room
+socket.emit("createRoom", joinRoomData);
+socket.emit("createRoom", joinRoomData2);
 
 //send leave room requests
 socket.emit("leaveRoom", leaveRoomData);

@@ -51,6 +51,7 @@ h2 {
 .item {
   background-color: #eae4d7;
   outline: 2px solid #231e21;
+  outline-width: medium;
   justify-content: center;
   align-content: center;
 }
@@ -152,6 +153,7 @@ h2 {
 .item-interests {
   background-color: #eae4d7;
   outline: 2px solid #231e21;
+  outline-width: medium;
   justify-content: center;
   align-content: center;
   text-align: center;
@@ -296,6 +298,7 @@ textarea {
 
 .user-box {
   outline: #231e21 solid 2px;
+  outline-width: medium;
   width: 150px;
   height: 200px;
   top: 50px;
@@ -317,6 +320,7 @@ textarea {
 .user-image {
   grid-row: 2/4;
   outline: #231e21 solid 2px;
+  outline-width: medium;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -352,6 +356,8 @@ h4 {
 
 .interest-1 {
   grid-area: interest-1;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 .interest-2 {
@@ -360,6 +366,8 @@ h4 {
 
 .interest-3 {
   grid-area: interest-3;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 .interest-4 {
@@ -368,6 +376,8 @@ h4 {
 
 .interest-5 {
   grid-area: interest-5;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 .interest-6 {
@@ -376,6 +386,8 @@ h4 {
 
 .interest-7 {
   grid-area: interest-7;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 .interest-8 {
@@ -384,6 +396,8 @@ h4 {
 
 .interest-9 {
   grid-area: interest-9;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 .interest-10 {
@@ -394,14 +408,19 @@ h4 {
   width: 25px;
 }
 
+.add-interest-button-light {
+  width: 25px;
+}
+
 .remove-interest-button {
   width: 25px;
-  transform: rotate(45deg)
+  transform: rotate(45deg);
 }
 
 .add-button {
   text-decoration: none;
   border: none;
+  background-color: inherit;
 }
 
 .trending-container {
@@ -487,3 +506,159 @@ h4 {
 .submit {
   grid-area: submit;
 }
+
+.trending-link {
+  text-decoration: none;
+  color: #eae4d7;
+}
+
+a {
+  text-decoration: none;
+}
+
+.trend-container {
+  margin: auto;
+  margin-top: 150px;
+  display: grid;
+  grid-template-areas:
+    "trend-1 trend-2 trend-2 . . ."
+    "trend-3 trend-3 trend-3 trend-3 trend-3 trend-3"
+    "trend-4 trend-4 trend-5 trend-5 trend-6 trend-6"
+    "trend-7 trend-7 trend-8 trend-8 trend-9 trend-9"
+    "trend-10 trend-10 trend-11 trend-11 trend-12 trend-12"
+    "trend-13 trend-13 trend-14 trend-14 trend-15 trend-15";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 1fr 2fr 2fr 2fr 2fr;
+  height: 1450px;
+  width: 1030px;
+}
+
+.chat-icon-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  margin: auto;
+}
+
+.light-logo-full {
+  height: 35px;
+}
+
+.trending-chat-item {
+  background-color: #eae4d7;
+  outline: 2px solid #231e21;
+  outline-width: medium;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.trending-chat-item .dots {
+  margin: auto;
+  margin-top: 40px;
+  width: 25%;
+}
+
+.trend-1 {
+  display: grid;
+  grid-area: trend-1;
+}
+
+.trend-2 {
+  display: grid;
+  grid-area: trend-2;
+  background-color: #231e21;
+}
+
+.trend-3 {
+  display: grid;
+  grid-area: trend-3;
+  color: #231e21;
+}
+
+.trend-4 {
+  display: grid;
+  grid-area: trend-4;
+}
+
+.trend-5 {
+  display: grid;
+  grid-area: trend-5;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+.trend-6 {
+  display: grid;
+  grid-area: trend-6;
+}
+
+.trend-7 {
+  display: grid;
+  grid-area: trend-7;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+.trend-8 {
+  display: grid;
+  grid-area: trend-8;
+}
+
+.trend-9 {
+  display: grid;
+  grid-area: trend-9;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+.trend-10 {
+  display: grid;
+  grid-area: trend-10;
+}
+
+.trend-11 {
+  display: grid;
+  grid-area: trend-11;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+.trend-12 {
+  display: grid;
+  grid-area: trend-12;
+}
+
+.trend-13 {
+  display: grid;
+  grid-area: trend-13;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+.trend-14 {
+  display: grid;
+  grid-area: trend-14;
+}
+
+.trend-15 {
+  display: grid;
+  grid-area: trend-15;
+  background-color: #231e21;
+  color: #eae4d7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

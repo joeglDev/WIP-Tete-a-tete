@@ -5,6 +5,7 @@ import TrendingChatsLinkVue from "./TrendingChatsLink.vue";
 import TrendingChatsLink from "./TrendingChatsLink.vue";
 import EmailSubscription from "./EmailSubscription.vue";
 import Footer from "./Footer.vue";
+
 </script>
 
 <template>
@@ -13,6 +14,6 @@ import Footer from "./Footer.vue";
     <Signup />
     <TrendingChatsLink />
     <EmailSubscription />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>

@@ -26,12 +26,6 @@
       <input class="submit" type="submit" value="Post!" />
     </form>
     <ul>
-      <!-- <conversation-ad
-      v-for="convo in conversations.values"
-      :key="convo.id"
-      :title="title"
-      @remove="conversation.values.splice(index, 1)"
-    ></conversation-ad> -->
       <li v-for="convo in conversations.values" :key="convo.conversation_id">
         <p>Title: {{ convo.title }}</p>
         <p>Description: {{ convo.body }}</p>
@@ -45,9 +39,7 @@
 import axios from "axios";
 import { userStore } from "../stores/user";
 import { convoStore } from "../stores/convoStore";
-import ConversationAd from "../components/ConversationAd.vue"; // not using component
 import { interestsStore } from "../stores/interestsStore";
-import { helperNameMap } from "@vue/compiler-core"; // What does this do?
 import {getConvos} from "../utils/fetchUserData"
 
 

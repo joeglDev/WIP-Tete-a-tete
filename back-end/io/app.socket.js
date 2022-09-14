@@ -21,15 +21,21 @@ io.on('connection', (socket) => {
     console.log('A user disconnected');
   });
 
- 
-    
+  //create a room of a specific name
+  socket.on('createRoom', (roomData) => {
+    const roomName = `${roomData.title}-${roomData.conversation_id}`;
+    socket.join(roomName);
+    console.log(`User has joined room: ${roomName}`);
+    socket.emit("onRoomJoin", roomData)
+  })
 
 });
 
 
 
-http.listen(Port.mainPort, () => {
-  console.log(`Server listening on ${Port.mainPort}`);
+
+http.listen(10001, () => {
+  console.log(`Server listening on 10001`);
 });
 
 

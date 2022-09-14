@@ -43,38 +43,50 @@ exports.insertNewUserConversation = async (user_id, new_conversation) => {
 };
 
 exports.selectMatchingConversations = async (topicNames) => {
-
   const client = await gQuerier.db.connect();
   const clientQuerier = new SqlQuerier(client);
 
   try {
     clientQuerier.db.query("BEGIN");
     //1 - get topic id array from topic names
-    const topicsPromises = topicNames.map((topicName) => {
-      return selectTopicByName(clientQuerier, topicName);
-    });
-
-    const topics = (await Promise.all(topicsPromises)).filter((topic) => {
-      return topic;
-    });
-    
+    const topics = await _topicNamesToTopics(topicNames, clientQuerier);
 
     //matching ids in topics_conversations_join
-    const joinPromises = topics.map(({ topic_id }) => {
-      return clientQuerier.selectItemWhere(
-        "topic_conversations_join",
-        "topic_id",
-        topic_id
-      );
-    });
-    const conversationJoins = await Promise.all(joinPromises);
-    console.log(conversationJoins)
+    const conversationJoins = await _selectAllConversationJoinsForEachTopic(
+      topics,
+      clientQuerier
+    );
 
     //get matching conversations
-    const conversationPromises = conversationJoins.map(
-      ({ conversation_id }) => {
-        return clientQuerier.db.query(
-          `
+    const conversations = await _convertJoinsForEachTopicToConversations(
+      conversationJoins,
+      clientQuerier
+    );
+    clientQuerier.db.query("COMMIT");
+    return conversations;
+  } catch (error) {
+    clientQuerier.db.query("ROLLBACK");
+  } finally {
+    client.release();
+  }
+};
+async function _convertJoinsForEachTopicToConversations(joins, querier) {
+  const conversationPromises = [];
+  joins.forEach((joinsPerTopic) => {
+    const promises = _conversationJoinsToConversationsProm(
+      joinsPerTopic,
+      querier
+    );
+    conversationPromises.push(...promises);
+  });
+  const conversations = await Promise.all(conversationPromises);
+  return conversations.map(({ rows }) => rows[0]);
+}
+
+function _conversationJoinsToConversationsProm(joins, querier) {
+  return joins.map(({ conversation_id }) => {
+    return querier.db.query(
+      `
           SELECT j.user_id AS author_user_id, j.conversation_id, j.topic_id, t.topic_name, c.title, c.body, u.screen_name AS author FROM topic_conversations_join j
           INNER JOIN conversations c
           ON j.conversation_id = c.conversation_id
@@ -84,23 +96,30 @@ exports.selectMatchingConversations = async (topicNames) => {
           ON j.topic_id = t.topic_id
           WHERE j.conversation_id = $1;
       `,
-          [conversation_id]
-        );
-      }
+      [conversation_id]
     );
+  });
+}
 
-    const conversations = await Promise.all(conversationPromises);
- 
+async function _selectAllConversationJoinsForEachTopic(topics, querier) {
+  const joinPromises = topics.map(({ topic_id }) => {
+    return querier.selectItemsWhere(
+      "topic_conversations_join",
+      "topic_id",
+      topic_id
+    );
+  });
+  const conversationJoins = await Promise.all(joinPromises);
+  return conversationJoins;
+}
 
-    clientQuerier.db.query("COMMIT");
+async function _topicNamesToTopics(topicNames, querier) {
+  const topicsPromises = topicNames.map((topicName) => {
+    return selectTopicByName(querier, topicName);
+  });
 
-    const returnedConversations = conversations.map((conversation) => {
-      return conversation.rows;
-    });
-    return returnedConversations;
-  } catch (error) {
-    clientQuerier.db.query("ROLLBACK");
-  } finally {
-    client.release();
-  }
-};
+  const topics = (await Promise.all(topicsPromises)).filter((topic) => {
+    return topic;
+  });
+  return topics;
+}

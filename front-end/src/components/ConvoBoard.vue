@@ -1,19 +1,16 @@
 <template>
   <!-- convo container class applies so that list appears under form - needs sorting -->
-  <div class="convo-creater convo-container">
-    <div><img class="chat-icon" src="../assets/chat-icon.svg" /></div>
-    <div>
-      <img class="light-logo" src="../assets/tete-a-tete-logo-light.svg" />
-    </div>
+  <div class="convo-creater ">
+    <div class="please-work">
     <form class="login-submit" @submit="onConvoSubmit">
-      <p class="question">What do you want to talk about?</p>
+      <div class="question"><h1>What do you want to talk about?</h1></div>
       <div class="title">
         <label>Title:</label>
-        <input type="text" required v-model="title" />
+        <input class="placeholder-change" type="text" placeholder ="Please enter what you would like to talk about here" required v-model="title" />
       </div>
       <div class="description">
         <label>Description:</label>
-        <input type="text" required v-model="description" />
+        <input class="placeholder-desc" type="text" placeholder ="Briefly describe what you would like to talk about" required v-model="description" />
       </div>
       <div class="topic">
         <label>Topic:</label>
@@ -23,7 +20,10 @@
           </option>
         </select>
       </div>
-      <input class="submit" type="submit" value="Post!" />
+      <div>
+        <input class="submit-button-talk" type="submit" value="Post!" />
+      </div>
+      
     </form>
     <ul>
       <li v-for="convo in conversations.values" :key="convo.conversation_id" v-on:click="joinChat">
@@ -32,6 +32,7 @@
         <p>Topic: {{ convo.topic_name }}</p>
       </li >
     </ul>
+  </div>
   </div>
 </template>
 

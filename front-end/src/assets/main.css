@@ -659,6 +659,69 @@ a {
   flex-direction: column;
 }
 
+.convo-creater {
+  margin-top: 150px;
+  color: #231e21;
+}
+
+.please-work {
+  width: 1030px;
+  margin: auto;
+}
+
+.title label {
+  font-size: 18px;
+}
+
+input[type="text"] {
+  border: none; /* Get rid of the browser's styling */
+  border-bottom: 1px solid #231e21; /* Add your own border */
+  width: 100%;
+}
+
+.title {
+  margin-top: 15px;
+}
+
+.placeholder-change {
+  font-family: "lemurregular";
+  font-size: 40px;
+  color: #231e21;
+  line-height: 0.4;
+}
+
+.description {
+  margin-top: 35px;
+}
+
+.placeholder-desc {
+  font-family: "lemurregular";
+  font-size: 40px;
+  color: #231e21;
+  line-height: 0.4;
+}
+
+.topic {
+  margin-top: 35px;
+  position: relative;
+}
+
+.submit-button-talk {
+  margin-top: 20px;
+  float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

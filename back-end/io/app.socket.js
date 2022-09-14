@@ -14,13 +14,12 @@ app.use(cors());
 
 io.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  socket.emit("hello", "world");
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
 
   //create a room of a specific name
-  socket.on("createRoom", (joinRoomData) => {
+  socket.on("joinRoom", (joinRoomData) => {
     const roomName = `${joinRoomData.title}-${joinRoomData.conversation_id}`;
     joinRoomData.room_name = roomName;
     socket.join(roomName);

@@ -3,6 +3,7 @@ import Login from "../components/Login.vue";
 import Main from "../components/Main.vue";
 import Home from "../components/Home.vue";
 import FullChatBoard from "../components/FullChatBoard.vue";
+import Dialogue from "../components/Dialogue.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,11 +29,11 @@ const router = createRouter({
     //   name: "chatboard",
     //   component: ChatBoard,
     // }
-    // {
-    //   path: "/dialogue",
-    //   name: "dialogue",
-    //   component: Dialogue,
-    // },
+    {
+      path: "/chat",
+      name: "dialogue",
+      component: Dialogue,
+    },
   ],
 });
 

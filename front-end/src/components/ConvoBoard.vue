@@ -26,7 +26,7 @@
       <input class="submit" type="submit" value="Post!" />
     </form>
     <ul>
-      <li v-for="convo in conversations.values" :key="convo.conversation_id">
+      <li v-for="convo in conversations.values" :key="convo.conversation_id" v-on:click="joinChat">
         <p>Title: {{ convo.title }}</p>
         <p>Description: {{ convo.body }}</p>
         <p>Topic: {{ convo.topic_name }}</p>
@@ -41,6 +41,7 @@ import { userStore } from "../stores/user";
 import { convoStore } from "../stores/convoStore";
 import { interestsStore } from "../stores/interestsStore";
 import {getConvos} from "../utils/fetchUserData"
+import router from "../router"
 
 
 const profile = userStore();
@@ -67,6 +68,7 @@ const onConvoSubmit = (event) => {
       newConversation
     )
     .then((response) => {    
+      console.log(response)
      getConvos(interests) 
      // newly added conversation ad doesn't come back, unavailable on insomnia too
     })
@@ -74,4 +76,8 @@ const onConvoSubmit = (event) => {
       console.log(error);
     });
 };
+
+const joinChat = () => {
+  router.push('/chat')
+}
 </script>

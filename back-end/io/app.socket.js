@@ -1,37 +1,46 @@
 const app = require(`${__dirname}/../app.js`);
-const {Port} = require("../../shared/Port");
-console.log(Port.mainPort)
+const { Port } = require("../../shared/Port");
+console.log(Port.mainPort);
 
-
-
-const http = require('http').Server(app);
-const cors = require('cors');
-const io = require('socket.io')(http, {
+const http = require("http").Server(app);
+const cors = require("cors");
+const io = require("socket.io")(http, {
   cors: {
-      origin: "*"
-  }
+    origin: "*",
+  },
 });
 
 app.use(cors());
 
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  socket.emit("hello", "world")
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
   });
 
- 
-    
+  //create a room of a specific name
+  socket.on("joinRoom", (joinRoomData) => {
+    const roomName = `${joinRoomData.title}-${joinRoomData.conversation_id}`;
+    joinRoomData.room_name = roomName;
+    socket.join(roomName);
+    console.log(`${joinRoomData.joiner_screen_name} has joined room: ${roomName}`);
+    socket.to(roomName).emit("onRoomJoin", joinRoomData);
+  });
 
+  //handle user leaving room
+socket.on("leaveRoom", (leaveRoomData) => {
+  const roomName = `${leaveRoomData.title}-${leaveRoomData.conversation_id}`;
+  socket.leave(roomName);
+  socket.to(roomName).emit('onRoomLeave', leaveRoomData)
+  console.log(`${leaveRoomData.joiner_screen_name} has left room: ${roomName}`)
+});
 });
 
 
 
-http.listen(Port.mainPort, () => {
-  console.log(`Server listening on ${Port.mainPort}`);
+http.listen(Port.socketPort, () => {
+  console.log(`Server listening on ${Port.socketPort}`);
 });
-
 
 /*
 const cors = require("cors");
@@ -62,6 +71,3 @@ socketIO.on("connection", (socketIO) => {
 });
 
 */
-
-
-

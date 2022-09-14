@@ -20,12 +20,12 @@ io.on("connection", (socket) => {
   });
 
   //create a room of a specific name
-  socket.on("createRoom", (roomJoinData) => {
-    const roomName = `${roomJoinData.title}-${roomJoinData.conversation_id}`;
-    roomJoinData.room_name = roomName;
+  socket.on("createRoom", (joinRoomData) => {
+    const roomName = `${joinRoomData.title}-${joinRoomData.conversation_id}`;
+    joinRoomData.room_name = roomName;
     socket.join(roomName);
-    console.log(`User has joined room: ${roomName}`);
-    socket.emit("onRoomJoin", roomJoinData);
+    console.log(`${joinRoomData.joiner_screen_name} has joined room: ${roomName}`);
+    socket.emit("onRoomJoin", joinRoomData);
   });
 });
 

@@ -1,72 +1,111 @@
 <template>
 <div>
-  <div v-if="!joined" class="parent-container">
+  <div v-if="!messages.joined" class="parent-container">
     <div class="name-container">
-      <input type="text" class="user-name" v-model="currentUser" />
+      <p class="user-name">{{profile.screen_name}}</p>
       <button class="join-button" v-on:click="join">Join</button>
     </div>
   </div>
-  <div v-if="joined">
+  <div v-if="messages.joined">
     <div class="list-container">
-      <div v-for="message in messages" :key="message.id">
+      <div v-for="message in messages.messages" :key="message.id">
         <b>
-          {{ message.user }}
+          {{ messages.screenName }}
         </b>
         : {{ message.text }}
       </div>
     </div>
     <div class="text-input-container">
       <textarea
-        v-model="text"
+        v-model="messages.text"
         class="text-message"
-        v-on:keyup.enter="sendMessage"
+        v-on:keyup.enter="messages.sendMessage"
       ></textarea>
     </div>
   </div>
   </div>
 </template>
 
-<script>
-import io from "socket.io-client";
+<script setup>
+  import {messagesStore} from "../stores/messagesStore"
+  import { socketStore } from "../stores/socketStore"
+  import { ref, onMounted } from "vue"
+  import { defineStore } from "pinia";
+  import {userStore} from "../stores/user"
 
-export default {
-  data() {
-    return {
-      joined: false,
-      currentUser: "",
-      text: "",
-      messages: [],
-    };
-  },
-  methods: {
-    join() {
-      this.joined = true;
-      this.socketInstance = io("http://localhost:3000");
+  const profile = userStore()
 
-      this.socketInstance.on(
-        "message:received", (data) => {
-          this.messages = this.messages.concat(data);
-        }
-      )
-    },
-    sendMessage() {
-      this.addMessage();
+  console.log(profile.screen_name)
 
-      this.text = "";
-    },
-    addMessage() {
-      const message = {
-        id: new Date().getTime(),
-        text: this.text,
-        user: this.currentUser,
-      };
+  const socketParent = socketStore()
+  const messages = messagesStore()
 
-      this.messages = this.messages.concat(message);
-      this.socketInstance.emit('message', message);
-    },
-  },
-  name: "Dialogue",
-};
+   console.log(messages, "hiiii")
+  const socket = socketParent.values.socket
+
+  console.log(socket)
+
+ 
+
+  onMounted(()=>{
+    console.log("mounted!")
+    socket.on("onRoomJoin", (joinRoomData) => {
+    console.log(`${joinRoomData.joiner_screen_name} has joined room ${joinRoomData.room_name}.`)
+    });
+  })
+
+  const join = () => {
+
+  const joinRoomData = {
+  conversation_id: 1,
+  topic_id: 1,
+  title: "Asian Baking",
+  joiner_screen_name: "Sol",
+  };
+
+    socket.emit("joinRoom", joinRoomData)
+
+    messages.changeMethods(true);
+  }
+
+// export default {
+//   data() {
+//     return {
+//       joined: false,
+//       currentUser: "",
+//       text: "",
+//       messages: [],
+//     };
+//   },
+//   methods: {
+//     join() {
+//       this.joined = true;
+//       this.socketInstance = io("http://localhost:3000");
+
+//       this.socketInstance.on(
+//         "message:received", (data) => {
+//           this.messages = this.messages.concat(data);
+//         }
+//       )
+//     },
+//     sendMessage() {
+//       this.addMessage();
+
+//       this.text = "";
+//     },
+//     addMessage() {
+//       const message = {
+//         id: new Date().getTime(),
+//         text: this.text,
+//         user: this.currentUser,
+//       };
+
+//       this.messages = this.messages.concat(message);
+//       this.socketInstance.emit('message', message);
+//     },
+//   },
+//   name: "Dialogue",
+// };
 </script>
 
 <style scoped>

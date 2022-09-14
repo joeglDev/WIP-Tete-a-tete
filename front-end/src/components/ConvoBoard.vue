@@ -36,7 +36,7 @@
         <p>Title: {{ convo.title }}</p>
         <p>Description: {{ convo.body }}</p>
         <p>Topic: {{ convo.topic_name }}</p>
-      </li>
+      </li >
     </ul>
   </div>
 </template>
@@ -48,12 +48,15 @@ import { convoStore } from "../stores/convoStore";
 import ConversationAd from "../components/ConversationAd.vue"; // not using component
 import { interestsStore } from "../stores/interestsStore";
 import { helperNameMap } from "@vue/compiler-core"; // What does this do?
+import {getConvos} from "../utils/fetchUserData"
+
 
 const profile = userStore();
 const conversations = convoStore();
 const interests = interestsStore();
 
-console.log(conversations.values, "In CONVOBoard");
+
+
 
 const onConvoSubmit = (event) => {
   event.preventDefault();
@@ -71,9 +74,9 @@ const onConvoSubmit = (event) => {
       `http://localhost:9090/users/${profile.user_id}/conversation`,
       newConversation
     )
-    .then((response) => {
-      console.log(response, "post new conversation");
-      //conversations.setConversations(response.data.new_conversation);
+    .then((response) => {    
+     getConvos(interests) 
+     // newly added conversation ad doesn't come back, unavailable on insomnia too
     })
     .catch((error) => {
       console.log(error);

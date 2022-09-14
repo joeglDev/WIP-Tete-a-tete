@@ -1,37 +1,36 @@
 import { interestsStore } from "../stores/interestsStore";
 import axios from "axios";
 import { convoStore } from "../stores/convoStore";
+import { def } from "@vue/shared";
 
-const fetchTopics = (id) => {
-  const interestsArray = interestsStore();
+export const fetchTopics = (id) => {
+  const interests = interestsStore();
   axios
     .get(`http://localhost:9090/users/${id}/topics`)
     .then((response) => {
       interestsOverwriter(response.data.user_topics);
     })
     .then((response) => {
-      getConvos(interestsArray);
+      getConvos(interests);
     })
     .catch((err) => {
       console.log(err);
     });
 
   const interestsOverwriter = (fetchedTopics) => {
-    interestsArray.setInterestsArray(fetchedTopics);
-    return interestsArray;
+    interests.setInterestsArray(fetchedTopics);
+    return interests;
   };
 };
 
-const getConvos = (interestsArray) => {
+export const getConvos = (interests) => {
   const conversations = convoStore();
   axios
     .post("http://localhost:9090/conversations", {
-      topic_names: interestsArray.values,
+      topic_names: interests.values,
     })
     .then((response) => {
       const flatConversationsArray = response.data.conversations.flat();
       conversations.setConversations(flatConversationsArray);
     });
 };
-
-export default fetchTopics;

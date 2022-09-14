@@ -12,8 +12,6 @@ export const convoStore = defineStore("conversations", {
     actions : {
         setConversations(conversations) {
             this.values = conversations
-        },
-        removeConversation(index) {
             
         }
     }

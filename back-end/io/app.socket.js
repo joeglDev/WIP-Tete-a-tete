@@ -34,6 +34,12 @@ socket.on("leaveRoom", (leaveRoomData) => {
   socket.to(roomName).emit('onRoomLeave', leaveRoomData)
   console.log(`${leaveRoomData.joiner_screen_name} has left room: ${roomName}`)
 });
+
+
+socket.on("messageSubmit", (message) => {
+  socket.emit("messageSubmitConfirmation", message)
+
+})
 });
 
 

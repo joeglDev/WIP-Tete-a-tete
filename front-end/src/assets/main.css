@@ -417,6 +417,11 @@ h4 {
   transform: rotate(45deg);
 }
 
+.remove-interest-button-light {
+  width: 25px;
+  transform: rotate(45deg);
+}
+
 .add-button {
   text-decoration: none;
   border: none;
@@ -649,6 +654,10 @@ a {
   color: #eae4d7;
 }
 
+.convo-container {
+  display: flex;
+  flex-direction: column;
+}
 
 
 

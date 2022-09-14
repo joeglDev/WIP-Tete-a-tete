@@ -24,6 +24,7 @@ io.on('connection', (socket) => {
   //create a room of a specific name
   socket.on('createRoom', (roomData) => {
     const roomName = `${roomData.title}-${roomData.conversation_id}`;
+    roomData.room_name = roomName;
     socket.join(roomName);
     console.log(`User has joined room: ${roomName}`);
     socket.emit("onRoomJoin", roomData)
@@ -34,8 +35,8 @@ io.on('connection', (socket) => {
 
 
 
-http.listen(10001, () => {
-  console.log(`Server listening on 10001`);
+http.listen(Port.socketPort, () => {
+  console.log(`Server listening on ${Port.socketPort}`);
 });
 
 

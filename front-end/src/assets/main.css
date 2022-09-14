@@ -237,6 +237,7 @@ h2 {
 .login-container {
   margin: auto;
   margin-top: 150px;
+  margin-bottom: 150px;
   display: grid;
   grid-template-areas:
     "chat-icon logo logo . . ."
@@ -350,6 +351,7 @@ h4 {
   width: 1030px;
 }
 
+
 .interest-headline {
   grid-area: headline;
 }
@@ -459,12 +461,13 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  margin-bottom: 50px;
 }
 
 .footer-logo {
   width: 150px;
-  padding: 20px;
+  padding: 18px 50px;
+  border: 2px solid #231e21;
 }
 
 .email-box {
@@ -474,42 +477,59 @@ h4 {
 .copyright-text {
   position: absolute;
   right: 100px;
+  transform: translate(50px);
 }
 
 .convo-creater {
-  margin: auto;
   margin-top: 150px;
-  display: grid;
-  grid-template-areas:
-    "chat-icon logo logo . . ."
-    "question question question question question question"
-    "title title title title title title"
-    "description description description description description description"
-    "topic topic topic topic submit submit";
-  grid-template-rows: 1fr 2fr 1fr 1fr 1fr;
-  grid-template-columns: repeat(6, 1fr);
-  height: 400px;
-  width: 1030px;
+  color:#231e21;
 }
 
-.question {
-  grid-area: question;
+.please-work {
+  width: 1030px;
+  margin: auto;
+}
+
+.title label {
+  font-size: 18px;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 2px solid #231e21;
+  width: 100%;
 }
 
 .title {
-  grid-area: title;
+  margin-top: 15px;
+}
+
+.placeholder-change {
+  font-family: "lemurregular";
+  font-size: 40px;
+  color: #231e21;
+  line-height: 0.4;
 }
 
 .description {
-  grid-area: description;
+  margin-top: 35px;
+}
+
+.placeholder-desc {
+  font-family: "lemurregular";
+  font-size: 40px;
+  color: #231e21;
+  line-height: 0.4;
 }
 
 .topic {
-  grid-area: topic;
+  margin-top: 35px;
+  position: relative;
 }
 
-.submit {
-  grid-area: submit;
+.submit-button-talk {
+  margin-top: 20px;
+  float: right;
 }
 
 .trending-link {
@@ -657,6 +677,16 @@ a {
 .convo-container {
   display: flex;
   flex-direction: column;
+}
+
+.email-submit-container {
+  gap: 20px;
+}
+
+.email-submit-button{
+  margin-left: 25px;
+  background-color: #231e21;
+  color: #eae4d7;
 }
 
 

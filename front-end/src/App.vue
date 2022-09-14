@@ -1,6 +1,6 @@
 <script >
 import router from "./router";
-import Footer from "./components/Footer.vue";
+import PageFooter from "./components/PageFooter.vue";
 import Dialogue from "./components/Dialogue.vue";
 import socketIO from "socket.io-client";
 
@@ -9,14 +9,15 @@ const socket = socketIO.connect('http://localhost:10001');
 export default {
   name: "App",
   components: {
-   Dialogue
-  },
+    Dialogue,
+    PageFooter
+},
 };
 </script>
 
 <template>
   <div>   
     <RouterView />
-    <Footer />
+    <PageFooter/>
   </div>
 </template>

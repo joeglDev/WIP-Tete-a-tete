@@ -1,5 +1,8 @@
 <script setup>
     import LoginSubmit from "../components/LoginSubmit.vue";
+import TrendingChatsLink from "./TrendingChatsLink.vue";
+import EmailSubscription from "./EmailSubscription.vue";
+import PageFooter from "./PageFooter.vue";
 </script>
 
 <template>
@@ -9,5 +12,7 @@
       <div class="item three-login"><h1>Please login with your details below</h1></div>
       <div class="item four-login"><LoginSubmit/></div>
     </div>
+    <TrendingChatsLink/>
+    <EmailSubscription/>
 </template>
 

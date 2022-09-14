@@ -25,9 +25,19 @@ io.on("connection", (socket) => {
     joinRoomData.room_name = roomName;
     socket.join(roomName);
     console.log(`${joinRoomData.joiner_screen_name} has joined room: ${roomName}`);
-    socket.emit("onRoomJoin", joinRoomData);
+    socket.to(roomName).emit("onRoomJoin", joinRoomData);
   });
+
+  //handle user leaving room
+socket.on("leaveRoom", (leaveRoomData) => {
+  const roomName = `${leaveRoomData.title}-${leaveRoomData.conversation_id}`;
+  socket.leave(roomName);
+  socket.to(roomName).emit('onRoomLeave', leaveRoomData)
+  console.log(`${leaveRoomData.joiner_screen_name} has left room: ${roomName}`)
 });
+});
+
+
 
 http.listen(Port.socketPort, () => {
   console.log(`Server listening on ${Port.socketPort}`);

@@ -1,14 +1,12 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import { socketStore } from "./socketStore";
-import App from "@/App.vue";
+// import { socketStore } from "./socketStore";
 
-const pinia = createPinia();
-const app = createApp(App);
-app.use(pinia);
 
-const socketParent = socketStore()
-const socket = socketParent.values.socket
+
+
+// const socketParent = socketStore()
+// const socket = socketParent.values.socket
 
 export const messagesStore = defineStore("messages", {
 

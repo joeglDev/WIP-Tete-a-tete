@@ -6,7 +6,11 @@
     <div class="item-interests interest-1">
       <p>{{ interestsArray.values[0] }}</p>
       <p v-if="!interestsArray.values[0]">&nbsp;</p>
-      <input class="interest-input-dark" placeholder="insert interest 1" v-model="topic0" />
+      <input
+        class="interest-input-dark"
+        placeholder="insert interest 1"
+        v-model="topic0"
+      />
       <button v-on:click="interestsSubmit(0)" class="add-button">
         <img
           v-if="interestsArray.values[0]"
@@ -25,7 +29,11 @@
     <div class="item-interests interest-2">
       <p>{{ interestsArray.values[1] }}</p>
       <p v-if="!interestsArray.values[1]">&nbsp;</p>
-      <input class="interest-input-light" placeholder="insert interest 2" v-model="topic1" />
+      <input
+        class="interest-input-light"
+        placeholder="insert interest 2"
+        v-model="topic1"
+      />
       <button v-on:click="interestsSubmit(1)" class="add-button">
         <img
           v-if="interestsArray.values[1]"
@@ -44,7 +52,11 @@
     <div class="item-interests interest-3">
       <p>{{ interestsArray.values[2] }}</p>
       <p v-if="!interestsArray.values[2]">&nbsp;</p>
-      <input class="interest-input-dark" placeholder="insert interest 3" v-model="topic2" />
+      <input
+        class="interest-input-dark"
+        placeholder="insert interest 3"
+        v-model="topic2"
+      />
       <button v-on:click="interestsSubmit(2)" class="add-button">
         <img
           v-if="interestsArray.values[2]"
@@ -63,7 +75,11 @@
     <div class="item-interests interest-4">
       <p>{{ interestsArray.values[3] }}</p>
       <p v-if="!interestsArray.values[3]">&nbsp;</p>
-      <input class="interest-input-light" placeholder="insert interest 4" v-model="topic3" />
+      <input
+        class="interest-input-light"
+        placeholder="insert interest 4"
+        v-model="topic3"
+      />
       <button v-on:click="interestsSubmit(3)" class="add-button">
         <img
           v-if="interestsArray.values[3]"
@@ -82,7 +98,11 @@
     <div class="item-interests interest-5">
       <p>{{ interestsArray.values[4] }}</p>
       <p v-if="!interestsArray.values[4]">&nbsp;</p>
-      <input class="interest-input-dark" placeholder="insert interest 5" v-model="topic4" />
+      <input
+        class="interest-input-dark"
+        placeholder="insert interest 5"
+        v-model="topic4"
+      />
       <button v-on:click="interestsSubmit(4)" class="add-button">
         <img
           v-if="interestsArray.values[4]"
@@ -101,7 +121,11 @@
     <div class="item-interests interest-6">
       <p>{{ interestsArray.values[5] }}</p>
       <p v-if="!interestsArray.values[5]">&nbsp;</p>
-      <input class="interest-input-light" placeholder="insert interest 6" v-model="topic5" />
+      <input
+        class="interest-input-light"
+        placeholder="insert interest 6"
+        v-model="topic5"
+      />
       <button v-on:click="interestsSubmit(5)" class="add-button">
         <img
           v-if="interestsArray.values[5]"
@@ -120,7 +144,11 @@
     <div class="item-interests interest-7">
       <p>{{ interestsArray.values[6] }}</p>
       <p v-if="!interestsArray.values[6]">&nbsp;</p>
-      <input class="interest-input-dark" placeholder="insert interest 7" v-model="topic6" />
+      <input
+        class="interest-input-dark"
+        placeholder="insert interest 7"
+        v-model="topic6"
+      />
       <button v-on:click="interestsSubmit(6)" class="add-button">
         <img
           v-if="interestsArray.values[6]"
@@ -139,7 +167,11 @@
     <div class="item-interests interest-8">
       <p>{{ interestsArray.values[7] }}</p>
       <p v-if="!interestsArray.values[7]">&nbsp;</p>
-      <input class="interest-input-light" placeholder="insert interest 8" v-model="topic7" />
+      <input
+        class="interest-input-light"
+        placeholder="insert interest 8"
+        v-model="topic7"
+      />
       <button v-on:click="interestsSubmit(7)" class="add-button">
         <img
           v-if="interestsArray.values[7]"
@@ -158,7 +190,11 @@
     <div class="item-interests interest-9">
       <p>{{ interestsArray.values[8] }}</p>
       <p v-if="!interestsArray.values[8]">&nbsp;</p>
-      <input class="interest-input-dark" placeholder="insert interest 9" v-model="topic8" />
+      <input
+        class="interest-input-dark"
+        placeholder="insert interest 9"
+        v-model="topic8"
+      />
       <button v-on:click="interestsSubmit(8)" class="add-button">
         <img
           v-if="interestsArray.values[8]"
@@ -177,7 +213,11 @@
     <div class="item-interests interest-10">
       <p>{{ interestsArray.values[9] }}</p>
       <p v-if="!interestsArray.values[9]">&nbsp;</p>
-      <input class="interest-input-light" placeholder="insert interest 10" v-model="topic9" />
+      <input
+        class="interest-input-light"
+        placeholder="insert interest 10"
+        v-model="topic9"
+      />
       <button v-on:click="interestsSubmit(9)" class="add-button">
         <img
           v-if="interestsArray.values[9]"
@@ -201,9 +241,12 @@ import { ref, reactive } from "vue";
 import { interestsStore } from "../stores/interestsStore";
 import axios from "axios";
 import { userStore } from "../stores/user";
+import { convoStore } from "../stores/convoStore";
+import { getConvos } from "../utils/fetchUserData";
 
 const interestsArray = interestsStore();
 const profile = userStore();
+
 
 const topic0 = ref("");
 const topic1 = ref("");
@@ -235,6 +278,9 @@ const interestsSubmit = (index) => {
         interestsArray.setInterestsArray(response.data.updated_topics);
       }
     })
+    .then((response) => {
+      getConvos(interestsArray);
+    })
     .catch((error) => {
       if (error) {
         console.log(error);
@@ -255,8 +301,8 @@ const interestsSubmit = (index) => {
 }
 
 .add-interests-container input {
-border-bottom: #231e21 solid 2px;
-outline: none;
+  border-bottom: #231e21 solid 2px;
+  outline: none;
 }
 
 .interest-input-dark {
@@ -264,5 +310,4 @@ outline: none;
   border-bottom: #eae4d7 solid 2px;
   color: #eae4d7;
 }
-
 </style>

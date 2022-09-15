@@ -30,8 +30,6 @@ export const getConvos = (interests) => {
       topic_names: interests.values,
     })
     .then((response) => {
-      console.log(response)
-      const flatConversationsArray = response.data.conversations.flat();
-      conversations.setConversations(flatConversationsArray);
+      conversations.setConversations(response.data.conversations);
     });
 };

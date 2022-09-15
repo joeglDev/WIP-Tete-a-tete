@@ -3,7 +3,7 @@
     <div>
       <h3>Subscribe to our mailing list here</h3>
     </div>
-    <div>
+    <div class="email-submit-container">
       <input
         class="email-box"
         type="text"
@@ -12,8 +12,8 @@
         required
         v-model="email"
       />
+      <button class="email-submit-button" @click="functionCaller">submit</button>
     </div>
-    <button @click="functionCaller">submit</button>
   </div>
 </template>
 

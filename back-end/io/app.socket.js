@@ -1,6 +1,5 @@
 const app = require(`${__dirname}/../app.js`);
 const { Port } = require("../../shared/Port");
-console.log(Port.mainPort);
 
 const http = require("http").Server(app);
 const cors = require("cors");
@@ -39,9 +38,14 @@ socket.on("leaveRoom", (leaveRoomData) => {
 socket.on("messageSubmit", (message) => {
   console.log(`Received message from ${message.user} of body ${message.text}`)
   socket.emit("messageSubmitConfirmation", message)
-
 })
 });
+
+/*
+for multiple local users
+1. assign each new socket to a new array
+2. when receive message -> for loop thru sockets and emit to each
+*/
 
 
 

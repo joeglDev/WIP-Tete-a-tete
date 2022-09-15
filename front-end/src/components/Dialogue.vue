@@ -45,12 +45,9 @@ onMounted(() => {
   });
 
   socket.on("messageSubmitConfirmation", (newMessage) => {
-    console.log(newMessage)
     console.log(`Received new message: ${newMessage}`);
     messages.addMessage(newMessage)
-    //TO DO
-    //1. add new Message to all messages State
-    // Display all messages state
+
   })
 });
 
@@ -74,7 +71,7 @@ const submitMessage = () => {
     text: document.getElementById("text").value,
     user: profile.screen_name,
   }
-  //console.log("newMessage is: ", newMessage)
+ 
   socket.emit("messageSubmit", newMessage)
 
 };

@@ -15,7 +15,6 @@ export const messagesStore = defineStore("messages", {
   },
   actions: {
     changeMethods(joined, user) {
-      console.log(user, "in state method")
       this.joined = joined;
       this.screenName = user;
 
@@ -30,11 +29,9 @@ export const messagesStore = defineStore("messages", {
         text: this.text,
         user: this.screenName,
       };
-      console.log(newMessage)
-      console.log(this.messages, "state array")
       this.messages = this.messages.concat(newMessage);
       //this.currMessage = message;
-      //socket.emit("messageSubmit", message)
+  
     },
   },
 });

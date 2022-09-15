@@ -1,31 +1,37 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
+
 export const messagesStore = defineStore("messages", {
+
   state: () => {
     return {
       joined: false,
-      screenName: "solly",
+      screenName: "",
       text: "",
       messages: [],
+      //currMessage: ""
     };
   },
   actions: {
-    changeMethods(joined) {
+    changeMethods(joined, user) {
       this.joined = joined;
+      this.screenName = user;
+
     },
     sendMessage() {
       this.addMessage();
       this.text = "";
     },
-    addMessage() {
+    addMessage(newMessage) {
       const message = {
         id: new Date().getTime(),
         text: this.text,
-        user: this.currentUser,
+        user: this.screenName,
       };
-      this.messages = this.messages.concat(message);
-      //   this.socketInstance.emit("message", message);
+      this.messages = this.messages.concat(newMessage);
+      //this.currMessage = message;
+  
     },
   },
 });

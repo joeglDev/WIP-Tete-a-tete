@@ -1,72 +1,82 @@
 <template>
-<div>
-  <div v-if="!messages.joined" class="parent-container">
-    <div class="name-container">
-      <p class="user-name">{{profile.screen_name}}</p>
-      <button class="join-button" v-on:click="join">Join</button>
-    </div>
-  </div>
-  <div v-if="messages.joined">
-    <div class="list-container">
-      <div v-for="message in messages.messages" :key="message.id">
-        <b>
-          {{ messages.screenName }}
-        </b>
-        : {{ message.text }}
+  <div>
+    <div v-if="!messages.joined" class="parent-container">
+      <div class="name-container">
+        <p class="user-name">{{profile.screen_name}}</p>
+        <button class="join-button" v-on:click="join">Join</button>
       </div>
     </div>
-    <div class="text-input-container">
-      <textarea
-        v-model="messages.text"
-        class="text-message"
-        v-on:keyup.enter="messages.sendMessage"
-      ></textarea>
+    <div v-if="messages.joined">
+      <div class="list-container">
+        <div v-for="message in messages.messages" :key="message.id">
+          <b>
+            {{ messages.screenName }}
+          </b>
+          : {{ message.text }}
+        </div>
+      </div>
+      <div class="text-input-container">
+        <textarea v-model="messages.text" class="text-message" id="text"
+          v-on:keyup.enter="messages.sendMessage"></textarea>
+        <button v-on:click="submitMessage">Send Message</button>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script setup>
-  import {messagesStore} from "../stores/messagesStore"
-  import { socketStore } from "../stores/socketStore"
-  import { ref, onMounted } from "vue"
-  import { defineStore } from "pinia";
-  import {userStore} from "../stores/user"
+import { messagesStore } from "../stores/messagesStore"
+import { socketStore } from "../stores/socketStore"
+import { ref, onMounted } from "vue"
+import { defineStore } from "pinia";
+import { userStore } from "../stores/user"
 
-  const profile = userStore()
 
-  console.log(profile.screen_name)
+const profile = userStore()
+const socketParent = socketStore()
+const messages = messagesStore()
+const socket = socketParent.values.socket
 
-  const socketParent = socketStore()
-  const messages = messagesStore()
 
-   console.log(messages, "hiiii")
-  const socket = socketParent.values.socket
-
-  console.log(socket)
-
- 
-
-  onMounted(()=>{
-    console.log("mounted!")
-    socket.on("onRoomJoin", (joinRoomData) => {
+onMounted(() => {
+  console.log("mounted!")
+  socket.on("onRoomJoin", (joinRoomData) => {
     console.log(`${joinRoomData.joiner_screen_name} has joined room ${joinRoomData.room_name}.`)
-    });
-  })
+  });
 
-  const join = () => {
+  socket.on("messageSubmitConfirmation", (newMessage) => {
+    console.log(`Received new message: ${newMessage}`);
+    messages.addMessage(newMessage)
+
+  })
+});
+
+const join = () => {
 
   const joinRoomData = {
-  conversation_id: 1,
-  topic_id: 1,
-  title: "Asian Baking",
-  joiner_screen_name: "Sol",
+    conversation_id: 1,
+    topic_id: 1,
+    title: "Asian Baking",
+    joiner_screen_name: "Sol",
   };
 
-    socket.emit("joinRoom", joinRoomData)
+  socket.emit("joinRoom", joinRoomData)
 
-    messages.changeMethods(true);
+  messages.changeMethods(true, profile.screen_name);
+}
+
+const submitMessage = () => {
+  const newMessage = {
+    id: new Date().getTime(),
+    text: document.getElementById("text").value,
+    user: profile.screen_name,
   }
+ 
+  socket.emit("messageSubmit", newMessage)
+
+};
+
+
 
 // export default {
 //   data() {

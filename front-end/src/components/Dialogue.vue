@@ -34,17 +34,12 @@
   import {userStore} from "../stores/user"
 
   const profile = userStore()
-
-  console.log(profile.screen_name)
-
   const socketParent = socketStore()
   const messages = messagesStore()
-
-   console.log(messages, "hiiii")
   const socket = socketParent.values.socket
 
-  console.log(socket)
-
+  console.log(messages.currMessage, "In dialogue")
+    
  
 
   onMounted(()=>{
@@ -67,6 +62,8 @@
 
     messages.changeMethods(true, profile.screen_name);
   }
+
+  
 
 // export default {
 //   data() {

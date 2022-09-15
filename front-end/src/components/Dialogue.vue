@@ -65,7 +65,7 @@
 
     socket.emit("joinRoom", joinRoomData)
 
-    messages.changeMethods(true);
+    messages.changeMethods(true, profile.screen_name);
   }
 
 // export default {

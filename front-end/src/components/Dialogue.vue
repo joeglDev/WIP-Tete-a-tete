@@ -10,7 +10,7 @@
       <div class="list-container">
         <div v-for="message in messages.messages" :key="message.id">
           <b>
-            {{ messages.screenName }}
+            {{ message.user }}
           </b>
           : {{ message.text }}
         </div>
@@ -30,22 +30,26 @@ import { socketStore } from "../stores/socketStore"
 import { ref, onMounted } from "vue"
 import { defineStore } from "pinia";
 import { userStore } from "../stores/user"
+import socketIO from "socket.io-client";
+
 
 
 const profile = userStore()
-const socketParent = socketStore()
+//const socketParent = socketStore()
 const messages = messagesStore()
-const socket = socketParent.values.socket
+//const socket = socketParent.values.socket
 
 
+  const socket = socketIO.connect('http://localhost:10001');
 onMounted(() => {
-  console.log("mounted!")
+  console.log(profile.screen_name, "mounted!")
   socket.on("onRoomJoin", (joinRoomData) => {
     console.log(`${joinRoomData.joiner_screen_name} has joined room ${joinRoomData.room_name}.`)
   });
 
   socket.on("messageSubmitConfirmation", (newMessage) => {
     console.log(`Received new message: ${newMessage}`);
+    console.log(newMessage, "Received message in Dialogue")
     messages.addMessage(newMessage)
 
   })
@@ -57,7 +61,7 @@ const join = () => {
     conversation_id: 1,
     topic_id: 1,
     title: "Asian Baking",
-    joiner_screen_name: "Sol",
+    joiner_screen_name: profile.screen_name,
   };
 
   socket.emit("joinRoom", joinRoomData)
@@ -71,9 +75,10 @@ const submitMessage = () => {
     text: document.getElementById("text").value,
     user: profile.screen_name,
   }
- 
+ console.log(newMessage, "In Dialogue before emit submit message")
   socket.emit("messageSubmit", newMessage)
-
+console.log(newMessage, "In Dialogue after emit submit message")
+messages.sendMessage(newMessage)
 };
 
 

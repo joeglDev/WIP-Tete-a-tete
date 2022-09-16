@@ -19,16 +19,18 @@ export const messagesStore = defineStore("messages", {
       this.screenName = user;
 
     },
-    sendMessage() {
-      this.addMessage();
+    sendMessage(newMessage) {
+      console.log(newMessage, "In message store send message")
+      this.addMessage(newMessage);
       this.text = "";
     },
     addMessage(newMessage) {
-      const message = {
-        id: new Date().getTime(),
-        text: this.text,
-        user: this.screenName,
-      };
+      console.log(newMessage, "In message store add message")
+      // const message = {
+      //   id: new Date().getTime(),
+      //   text: this.text,
+      //   user: this.screenName,
+      // };
       this.messages = this.messages.concat(newMessage);
       //this.currMessage = message;
   

@@ -37,7 +37,7 @@ socket.on("leaveRoom", (leaveRoomData) => {
 
 socket.on("messageSubmit", (message) => {
   console.log(`Received message from ${message.user} of body ${message.text}`)
-  socket.emit("messageSubmitConfirmation", message)
+  socket.broadcast.emit("messageSubmitConfirmation", message)
 })
 });
 

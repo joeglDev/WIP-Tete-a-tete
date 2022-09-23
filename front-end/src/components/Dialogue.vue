@@ -54,7 +54,6 @@ onMounted(() => {
   });
 
   socket.on("messageSubmitConfirmation", (newMessage) => {
-    console.log(`Received new message: ${newMessage}`);
     console.log(newMessage, "Received message in Dialogue")
     messages.addMessage(newMessage)
 
@@ -84,6 +83,7 @@ const submitMessage = () => {
     id: new Date().getTime(),
     text: document.getElementById("text").value,
     user: profile.screen_name,
+    room_id: route.query.conversation_id
   }
  console.log(newMessage, "Submitted message")
   socket.emit("messageSubmit", newMessage)

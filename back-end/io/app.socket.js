@@ -38,7 +38,7 @@ socket.on("leaveRoom", (leaveRoomData) => {
 socket.on("messageSubmit", (message) => {
   console.log(`Received message from ${message.user} of body ${message.text}`)
   socket.to(message.room_id).emit("messageSubmitConfirmation", message)
-}) //emit only
+}) //socket.to to send to others  / io.to to send to all users (results in duplication currently)
 });
 
 

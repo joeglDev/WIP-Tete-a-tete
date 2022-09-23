@@ -35,9 +35,9 @@ import socketIO from "socket.io-client";
 
 
 const profile = userStore()
-//const socketParent = socketStore()
+
 const messages = messagesStore()
-//const socket = socketParent.values.socket
+
 
 
   const socket = socketIO.connect('http://localhost:10001');
@@ -75,9 +75,8 @@ const submitMessage = () => {
     text: document.getElementById("text").value,
     user: profile.screen_name,
   }
- console.log(newMessage, "In Dialogue before emit submit message")
+ console.log(newMessage, "Submitted message")
   socket.emit("messageSubmit", newMessage)
-console.log(newMessage, "In Dialogue after emit submit message")
 messages.sendMessage(newMessage)
 };
 

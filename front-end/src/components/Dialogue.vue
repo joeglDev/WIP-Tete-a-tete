@@ -1,5 +1,8 @@
+
+
 <template>
   <div>
+    <p></p>
     <div v-if="!messages.joined" class="parent-container">
       <div class="name-container">
         <p class="user-name">{{profile.screen_name}}</p>
@@ -26,17 +29,20 @@
 
 <script setup>
 import { messagesStore } from "../stores/messagesStore"
-import { socketStore } from "../stores/socketStore"
-import { ref, onMounted } from "vue"
-import { defineStore } from "pinia";
+import { onMounted } from "vue"
 import { userStore } from "../stores/user"
 import socketIO from "socket.io-client";
+import {useRoute} from "vue-router";
+    const route = useRoute();
+  
+
+  
 
 
 
-const profile = userStore()
+const profile = userStore();
 
-const messages = messagesStore()
+const messages = messagesStore();
 
 
 
@@ -57,12 +63,16 @@ onMounted(() => {
 
 const join = () => {
 
+
+
+
   const joinRoomData = {
-    conversation_id: 1,
-    topic_id: 1,
-    title: "Asian Baking",
+    conversation_id: route.query.conversation_id,
+    topic_id: route.query.topic_id,
     joiner_screen_name: profile.screen_name,
   };
+console.log(joinRoomData)
+
 
   socket.emit("joinRoom", joinRoomData)
 

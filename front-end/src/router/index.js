@@ -24,15 +24,12 @@ const router = createRouter({
       component: Home,
     },
     { path: "/trending", name: "trending", component: FullChatBoard },
-    // {
-    //   path: "/chatboard",
-    //   name: "chatboard",
-    //   component: ChatBoard,
-    // }
+  
     {
       path: "/chat",
       name: "dialogue",
       component: Dialogue,
+      props: true,
     },
   ],
 });

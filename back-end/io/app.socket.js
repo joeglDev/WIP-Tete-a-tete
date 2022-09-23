@@ -37,7 +37,7 @@ socket.on("leaveRoom", (leaveRoomData) => {
 
 socket.on("messageSubmit", (message) => {
   console.log(`Received message from ${message.user} of body ${message.text}`)
-  io.to(message.room_id).emit("messageSubmitConfirmation", message)
+  socket.to(message.room_id).emit("messageSubmitConfirmation", message)
 }) //emit only
 });
 

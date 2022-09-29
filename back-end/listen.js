@@ -1,8 +1,6 @@
 const app = require("./app");
 const http = require("./io/app.socket");
 const socketPort = process.env.PORT || 10001;
-
-
 const { PORT = 9090 } = process.env;
 
 app.listen(PORT, (err) => {

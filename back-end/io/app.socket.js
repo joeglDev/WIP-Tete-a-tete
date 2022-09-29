@@ -4,7 +4,6 @@ const app = require(`${__dirname}/../app.js`);
 const http = require("http").Server(app);
 module.exports = http;
 const cors = require("cors");
-const { builtinModules } = require("module");
 const io = require("socket.io")(http, {
   cors: {
     origin: "*",

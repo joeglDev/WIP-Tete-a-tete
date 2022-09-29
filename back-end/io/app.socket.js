@@ -1,8 +1,10 @@
 const app = require(`${__dirname}/../app.js`);
-const { Port } = require("../../shared/Port");
+
 
 const http = require("http").Server(app);
+module.exports = http;
 const cors = require("cors");
+const { builtinModules } = require("module");
 const io = require("socket.io")(http, {
   cors: {
     origin: "*",
@@ -41,11 +43,8 @@ socket.on("messageSubmit", (message) => {
 }) //socket.to to send to others  / io.to to send to all users (results in duplication currently)
 });
 
-
-
-
-
+/*
 http.listen(Port.socketPort, () => {
   console.log(`Server listening on ${Port.socketPort}`);
 });
-
+*/

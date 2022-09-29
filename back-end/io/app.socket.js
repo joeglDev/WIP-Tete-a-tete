@@ -19,11 +19,11 @@ io.on("connection", (socket) => {
 
   //create a room of a specific name
   socket.on("joinRoom", (joinRoomData) => {
-    const roomName = `${joinRoomData.title}-${joinRoomData.conversation_id}`;
+    const roomName = joinRoomData.conversation_id;
     joinRoomData.room_name = roomName;
     socket.join(roomName);
     console.log(`${joinRoomData.joiner_screen_name} has joined room: ${roomName}`);
-    socket.to(roomName).emit("onRoomJoin", joinRoomData);
+    io.to(roomName).emit("onRoomJoin", joinRoomData);
   });
 
   //handle user leaving room
@@ -37,15 +37,11 @@ socket.on("leaveRoom", (leaveRoomData) => {
 
 socket.on("messageSubmit", (message) => {
   console.log(`Received message from ${message.user} of body ${message.text}`)
-  socket.broadcast.emit("messageSubmitConfirmation", message)
-})
+  socket.to(message.room_id).emit("messageSubmitConfirmation", message)
+}) //socket.to to send to others  / io.to to send to all users (results in duplication currently)
 });
 
-/*
-for multiple local users
-1. assign each new socket to a new array
-2. when receive message -> for loop thru sockets and emit to each
-*/
+
 
 
 
@@ -53,32 +49,3 @@ http.listen(Port.socketPort, () => {
   console.log(`Server listening on ${Port.socketPort}`);
 });
 
-/*
-const cors = require("cors");
-
-const http = require("http").Server(app);
-const socketIO = require("socket.io")(http, {
-  cors: {
-    origin: "*", //"http://localhost:3000"
-  },
-});
-
-
-socketIO.on("connection", (socketIO) => {
-  
-
-  //client connected
-  console.log("Client connected.");
-  socketIO.emit("connected", "Client connected")
-
-  socketIO.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-
-  socketIO.on("join", (joinData) => {
-    console.log("User Joins", joinData);
-    socketIO.join(joinData.roomName);
-  });
-});
-
-*/

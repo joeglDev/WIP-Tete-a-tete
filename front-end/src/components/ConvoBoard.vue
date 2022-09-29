@@ -40,7 +40,7 @@
         <li
           v-for="convo in conversations.values"
           :key="convo.conversation_id"
-          v-on:click="joinChat"
+          v-on:click="joinChat(convo)"
         >
           <p>Title: {{ convo.title }}</p>
           <p>Description: {{ convo.body }}</p>
@@ -58,6 +58,7 @@ import { convoStore } from "../stores/convoStore";
 import { interestsStore } from "../stores/interestsStore";
 import { getConvos } from "../utils/fetchUserData";
 import router from "../router";
+import {useRoute} from 'vue-router'
 
 const profile = userStore();
 const conversations = convoStore();
@@ -88,7 +89,11 @@ const onConvoSubmit = (event) => {
     });
 };
 
-const joinChat = () => {
-  router.push("/chat");
+const joinChat = (convo) => {
+
+  router.push({
+    name: "dialogue",
+    query: convo
+  });
 };
 </script>

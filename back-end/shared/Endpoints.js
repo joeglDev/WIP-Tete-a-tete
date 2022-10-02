@@ -1,4 +1,5 @@
 class Endpoints {
+  static routeEnd = "/";
   static loginEnd = "/login";
   static usersEnd = "/users";
   static conversationsEnd = "/conversations";

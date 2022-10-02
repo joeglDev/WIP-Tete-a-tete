@@ -1,4 +1,4 @@
-const { HttpErrors } = require("../../shared/HttpErrors");
+const { HttpErrors } = require("../shared/HttpErrors");
 const { AuthenticatorMock } = require("../mocks/AuthenticatorMock");
 const { selectUserByUsername } = require("../models/users.model");
 

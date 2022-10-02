@@ -1,4 +1,4 @@
-const { HttpErrors } = require("../../shared/HttpErrors");
+const { HttpErrors } = require("../shared/HttpErrors");
 const { rejectWhenNonExistent, gQuerier } = require("./utils/model-utils.js");
 const { updateUserTopics } = require("./user-topic-join.model");
 const { selectUserTopics } = require("./user-topic-join.model");

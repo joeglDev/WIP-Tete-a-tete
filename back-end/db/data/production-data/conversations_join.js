@@ -1,7 +1,4 @@
 module.exports = [
-<<<<<<< HEAD
- 
-=======
   {
     user_id: 1,
     conversation_id: 1,
@@ -17,5 +14,4 @@ module.exports = [
     conversation_id: 3,
     topic_id: 3,
   },
->>>>>>> 791612a40fcec2832b9ec91ebef782fe6169efb7
 ];

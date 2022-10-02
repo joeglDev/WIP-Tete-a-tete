@@ -6,7 +6,7 @@ import { def } from "@vue/shared";
 export const fetchTopics = (id) => {
   const interests = interestsStore();
   axios
-    .get(`http://localhost:9090/users/${id}/topics`)
+    .get(`https://tete-a-tete-back-end.herokuapp.com/users/${id}/topics`)
     .then((response) => {
       interestsOverwriter(response.data.user_topics);
     })
@@ -26,7 +26,7 @@ export const fetchTopics = (id) => {
 export const getConvos = (interests) => {
   const conversations = convoStore();
   axios
-    .post("http://localhost:9090/conversations", {
+    .post("https://tete-a-tete-back-end.herokuapp.com/conversations", {
       topic_names: interests.values,
     })
     .then((response) => {

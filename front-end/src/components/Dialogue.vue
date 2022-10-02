@@ -46,7 +46,7 @@ const messages = messagesStore();
 
 
 
-  const socket = socketIO.connect('http://localhost:10001');
+  const socket = socketIO.connect('https://tete-a-tete-back-end.herokuapp.com');
 onMounted(() => {
   console.log(profile.screen_name, "mounted!")
   socket.on("onRoomJoin", (joinRoomData) => {

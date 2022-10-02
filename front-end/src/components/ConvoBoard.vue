@@ -77,7 +77,7 @@ const onConvoSubmit = (event) => {
 
   axios
     .post(
-      `https://tete-a-tete-back-end.herokuapp.com/${profile.user_id}/conversation`,
+      `https://tete-a-tete-back-end.herokuapp.com/users/${profile.user_id}/conversation`,
       newConversation
     )
     .then((response) => {

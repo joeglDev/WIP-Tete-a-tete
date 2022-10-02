@@ -270,7 +270,7 @@ const interestsSubmit = (index) => {
   const noNullsTopics = interestsArray.values.filter((topic) => topic);
 
   axios
-    .patch(`https://tete-a-tete-back-end.herokuapp.com//${profile.user_id}/topics`, {
+    .patch(`https://tete-a-tete-back-end.herokuapp.com/users/${profile.user_id}/topics`, {
       new_topics: noNullsTopics,
     })
     .then((response) => {
